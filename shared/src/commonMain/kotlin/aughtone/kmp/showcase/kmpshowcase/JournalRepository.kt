@@ -26,6 +26,6 @@ class JournalRepository {
             content = content,
             mood = mood
         )
-        _entries.value = _entries.value + newEntry
+        _entries.value += newEntry
     }
 }

@@ -9,8 +9,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
-class ListViewModel : ViewModel() {
-    private val repository = JournalRepository()
+class ListViewModel(
+    private val repository: JournalRepository
+) : ViewModel() {
 
     val entries: StateFlow<List<JournalEntry>> = repository.getEntries()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())

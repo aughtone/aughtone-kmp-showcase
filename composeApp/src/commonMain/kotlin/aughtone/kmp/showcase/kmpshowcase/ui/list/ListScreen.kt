@@ -12,16 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import aughtone.kmp.showcase.kmpshowcase.JournalEntry
 import aughtone.kmp.showcase.kmpshowcase.Mood
 import coil3.compose.AsyncImage
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
 @Composable
 fun ListScreen(
     modifier: Modifier = Modifier,
-    viewModel: ListViewModel = viewModel { ListViewModel() }
+    viewModel: ListViewModel = koinViewModel()
 ) {
     val entries by viewModel.entries.collectAsStateWithLifecycle()
     var showAddDialog by remember { mutableStateOf(false) }
