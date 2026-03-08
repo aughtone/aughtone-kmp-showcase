@@ -16,6 +16,10 @@ kotlin {
         }
     }
 
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -38,6 +42,7 @@ kotlin {
 
     js(IR) {
         browser()
+        binaries.executable()
     }
 
     @OptIn(ExperimentalWasmDsl::class)
