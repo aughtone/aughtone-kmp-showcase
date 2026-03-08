@@ -13,6 +13,8 @@ pluginManagement {
             }
         }
         mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
         gradlePluginPortal()
     }
 }
@@ -27,6 +29,9 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
+        maven("https://maven.pkg.jetbrains.space/public/p/skiko/maven")
     }
 }
 
@@ -37,5 +42,6 @@ plugins {
 include(":composeApp")
 include(":androidApp")
 include(":desktopApp")
+include(":webApp")
 include(":server")
 include(":shared")

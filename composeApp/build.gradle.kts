@@ -28,15 +28,13 @@ kotlin {
 
     jvm()
 
-    js {
+    js(IR) {
         browser()
-        binaries.executable()
     }
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         browser()
-        binaries.executable()
     }
 
     sourceSets {

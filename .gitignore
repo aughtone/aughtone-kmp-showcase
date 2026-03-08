@@ -3,3 +3,5 @@ build
 .idea
 .gradle
 .kotlin
+/kotlin-js-store/yarn.lock
+local.properties
