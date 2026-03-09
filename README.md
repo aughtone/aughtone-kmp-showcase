@@ -1,27 +1,20 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop (JVM), Server.
+This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop (JVM), and Server.
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-    - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-    - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-      For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-      the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-      Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-      folder is the appropriate location.
+## Project Structure
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+The project is organized into the following modules:
 
-* [/server](./server/src/main/kotlin) is for the Ktor server application.
-
-* [/shared](./shared/src) is for the code that will be shared between all targets in the project.
-  The most important subfolder is [commonMain](./shared/src/commonMain/kotlin). If preferred, you
-  can add code to the platform-specific folders here too.
+*   **[:androidApp](./androidApp)**: The native Android application target. Contains the `MainActivity`, `AndroidManifest.xml`, and any Android-specific startup logic.
+*   **[:composeApp](./composeApp)**: Serves as the main common application structure using Compose Multiplatform. It acts as the shared app entry point, bringing together the UI, features, and cross-platform setup for all client targets.
+*   **[:desktopApp](./desktopApp)**: The native desktop application target for JVM. Contains the desktop window setup and entry point.
+*   **[:iosApp](./iosApp)**: The native iOS application target. Contains the SwiftUI entry point and iOS-specific configurations.
+*   **[:server](./server)**: The Ktor backend application. It provides the REST API endpoints and backend logic for the KMP clients to consume.
+*   **[:shared](./shared)**: Contains common business logic, data models (e.g., `JournalEntry`), Ktor resources, and shared utilities utilized across all clients and the backend server.
+*   **[:webApp](./webApp)**: The native web application target (Kotlin/Wasm or Kotlin/JS). Contains the web-specific entry point and configurations.
 
 ### Build and Run Android Application
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
+To build and run the development version of the Android app, use the run configuration from the run widget in your IDE’s toolbar or build it directly from the terminal:
 
 - on macOS/Linux
   ```shell
@@ -34,8 +27,7 @@ in your IDE’s toolbar or build it directly from the terminal:
 
 ### Build and Run Desktop (JVM) Application
 
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
+To build and run the development version of the desktop app, use the run configuration from the run widget in your IDE’s toolbar or run it directly from the terminal:
 
 - on macOS/Linux
   ```shell
@@ -48,8 +40,7 @@ in your IDE’s toolbar or run it directly from the terminal:
 
 ### Build and Run Server
 
-To build and run the development version of the server, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
+To build and run the development version of the server, use the run configuration from the run widget in your IDE’s toolbar or run it directly from the terminal:
 
 - on macOS/Linux
   ```shell
@@ -62,8 +53,7 @@ in your IDE’s toolbar or run it directly from the terminal:
 
 ### Build and Run Web Application
 
-To build and run the development version of the web app, use the run configuration from the run widget
-in your IDE's toolbar or run it directly from the terminal:
+To build and run the development version of the web app, use the run configuration from the run widget in your IDE's toolbar or run it directly from the terminal:
 
 - for the Wasm target (faster, modern browsers):
     - on macOS/Linux
@@ -86,8 +76,7 @@ in your IDE's toolbar or run it directly from the terminal:
 
 ### Build and Run iOS Application
 
-To build and run the development version of the iOS app, use the run configuration from the run widget
-in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+To build and run the development version of the iOS app, use the run configuration from the run widget in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
 
 ---
 

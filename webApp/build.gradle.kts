@@ -17,17 +17,6 @@ kotlin {
         binaries.executable()
     }
 
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        outputModuleName.set("webApp")
-        browser {
-            commonWebpackConfig {
-                outputFileName = "webApp.js"
-            }
-        }
-        binaries.executable()
-    }
-
     sourceSets {
         val webMain by creating {
             dependsOn(commonMain.get())
@@ -35,10 +24,7 @@ kotlin {
         val jsMain by getting {
             dependsOn(webMain)
         }
-        val wasmJsMain by getting {
-            dependsOn(webMain)
-        }
-
+        
         commonMain.dependencies {
             implementation(projects.composeApp)
             implementation(libs.compose.runtime)
