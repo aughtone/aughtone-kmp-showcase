@@ -8,6 +8,7 @@ import aughtone.kmp.showcase.kmpshowcase.Mood
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class ListViewModel(
     private val repository: JournalRepository
@@ -17,6 +18,12 @@ class ListViewModel(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun addEntry(title: String, content: String, mood: Mood) {
-        repository.addEntry(title, content, mood)
+        viewModelScope.launch {
+            repository.addEntry(title, content, mood)
+                .onFailure { e ->
+                    // Here you can expose an error state flow or handle the UI error feedback.
+                    println("ViewModel: Failed to add entry: ${e.message}")
+                }
+        }
     }
 }
