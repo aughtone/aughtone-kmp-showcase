@@ -1,6 +1,5 @@
 package aughtone.kmp.showcase.kmpshowcase
 
-import aughtone.kmp.showcase.kmpshowcase.endpoints.JournalEntryResource
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
@@ -13,7 +12,6 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.contextual
 import schwarz.it.problem.details.Problem
 import schwarz.it.problem.details.ProblemSerializer
 import kotlin.test.*

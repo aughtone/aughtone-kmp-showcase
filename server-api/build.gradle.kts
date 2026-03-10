@@ -19,9 +19,8 @@ kotlin {
 
     jvm()
 
-    js {
+    js(IR) {
         browser()
-        binaries.executable()
     }
 
     @OptIn(ExperimentalWasmDsl::class)
@@ -31,24 +30,21 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            api(libs.kotlinx.datetime)
-            implementation(libs.kotlinx.coroutines.core)
+            api(libs.ktor.resources)
             api(libs.kotlinx.serialization.json)
-        }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+            api(libs.kotlinx.datetime)
         }
     }
 }
 
 android {
-    namespace = "aughtone.kmp.showcase.kmpshowcase.shared"
+    namespace = "aughtone.kmp.showcase.kmpshowcase.server.api"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+    defaultConfig {
+        minSdk = libs.versions.android.minSdk.get().toInt()
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
     }
 }

@@ -1,7 +1,7 @@
 package aughtone.kmp.showcase.kmpshowcase.data
 
 import aughtone.kmp.showcase.kmpshowcase.JournalEntry
-import aughtone.kmp.showcase.kmpshowcase.JournalRepository
+import aughtone.kmp.showcase.kmpshowcase.domain.JournalRepository
 import aughtone.kmp.showcase.kmpshowcase.Mood
 import aughtone.kmp.showcase.kmpshowcase.endpoints.JournalEntryResource
 import io.ktor.client.HttpClient

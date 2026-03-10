@@ -10,7 +10,6 @@ import io.ktor.server.request.path
 import io.ktor.server.resources.Resources
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.contextual
 import org.slf4j.event.Level
 import schwarz.it.problem.details.Problem
 import schwarz.it.problem.details.ProblemSerializer

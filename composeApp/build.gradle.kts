@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -37,7 +36,6 @@ kotlin {
         }
     }
 
-
     jvm()
 
     js(IR) {
@@ -45,13 +43,11 @@ kotlin {
         binaries.executable()
     }
 
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser()
-    }
-
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.serverApi)
+            implementation(projects.core.network)
+
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
@@ -75,13 +71,8 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
 
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.client.logging)
-            implementation(libs.ktor.client.resources)
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.serialization.kotlinx.json)
-
             implementation(projects.shared)
+            implementation(projects.core.network)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -91,23 +82,12 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
-            implementation(libs.ktor.client.cio)
         }
 
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
-            implementation(libs.ktor.client.cio)
         }
-
-        iosMain.dependencies {
-            implementation(libs.ktor.client.darwin)
-        }
-
-        webMain.dependencies {
-            implementation(libs.ktor.client.cio)
-        }
-
     }
 }
 
