@@ -1,9 +1,9 @@
 package aughtone.kmp.showcase.kmpshowcase.data
 
 import aughtone.kmp.showcase.kmpshowcase.JournalEntry
-import aughtone.kmp.showcase.kmpshowcase.domain.JournalRepository
 import aughtone.kmp.showcase.kmpshowcase.Mood
 import aughtone.kmp.showcase.kmpshowcase.database.Database
+import aughtone.kmp.showcase.kmpshowcase.domain.JournalRepository
 import aughtone.kmp.showcase.kmpshowcase.endpoints.JournalEntryResource
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -12,23 +12,20 @@ import io.ktor.client.plugins.resources.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import kotlin.time.Clock
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
 
 class JournalRepositoryImpl(
     private val httpClient: HttpClient,
     private val database: Database
 ) : JournalRepository {
-    private val _entries = MutableStateFlow<List<JournalEntry>>(emptyList())
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     init {
@@ -39,15 +36,14 @@ class JournalRepositoryImpl(
         scope.launch {
             try {
                 val remoteEntries: List<JournalEntry> = httpClient.get(JournalEntryResource()).body()
-                _entries.value = remoteEntries
+                database.saveEntries(remoteEntries)
             } catch (e: Exception) {
-                // Log or handle the fetch error as needed, keeping cached state in the meantime
                 println("Failed to fetch journal entries: ${e.message}")
             }
         }
     }
     
-    override fun getEntries(): Flow<List<JournalEntry>> = _entries.asStateFlow()
+    override fun getEntries(): Flow<List<JournalEntry>> = database.getEntries()
         .map { entries -> 
             entries.sortedByDescending { it.date } 
         }
@@ -60,9 +56,8 @@ class JournalRepositoryImpl(
         val now = Clock.System.now()
         val today = now.toLocalDateTime(TimeZone.currentSystemDefault()).date
         
-        // Optimistically create the local entry
         val newEntry = JournalEntry(
-            id = "", // Let the server decide if we want, or generate a temporary one
+            id = "", 
             title = title,
             date = today,
             content = content,
@@ -75,9 +70,19 @@ class JournalRepositoryImpl(
             setBody(newEntry)
         }.body<JournalEntry>()
     }.onSuccess { createdEntry ->
-        // Update the cache with the server's confirmed response (including the real ID)
-        _entries.value += createdEntry
+        database.addEntry(createdEntry)
     }.onFailure { e ->
         println("Failed to create journal entry on server: ${e.message}")
+        // If network fails, we still want to save it locally
+        val now = Clock.System.now()
+        val today = now.toLocalDateTime(TimeZone.currentSystemDefault()).date
+        val offlineEntry = JournalEntry(
+            id = "offline_${now.toEpochMilliseconds()}",
+            title = title,
+            date = today,
+            content = content,
+            mood = mood
+        )
+        database.addEntry(offlineEntry)
     }
 }
