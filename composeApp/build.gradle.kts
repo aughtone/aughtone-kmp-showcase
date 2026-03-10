@@ -38,10 +38,7 @@ kotlin {
 
     jvm()
 
-    js(IR) {
-        browser()
-        binaries.executable()
-    }
+    js(IR) { browser() }
 
     sourceSets {
         commonMain.dependencies {
@@ -72,7 +69,6 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
 
-            implementation(projects.shared)
             implementation(projects.core.network)
         }
         commonTest.dependencies {

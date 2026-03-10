@@ -6,30 +6,14 @@ plugins {
 
 kotlin {
     js(IR) {
-        outputModuleName.set("webApp")
-        browser {
-            commonWebpackConfig {
-                outputFileName = "webApp.js"
-            }
-        }
+        browser()
         binaries.executable()
     }
 
     sourceSets {
-        val webMain by creating {
-            dependsOn(commonMain.get())
-        }
-        val jsMain by getting {
-            dependsOn(webMain)
-        }
-        
         commonMain.dependencies {
             implementation(projects.composeApp)
-            implementation(libs.compose.runtime)
-            implementation(libs.compose.foundation)
-            implementation(libs.compose.material3)
             implementation(libs.compose.ui)
-            implementation(libs.compose.components.resources)
         }
     }
 }

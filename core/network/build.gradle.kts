@@ -19,11 +19,6 @@ kotlin {
 
     js(IR) { browser() }
 
-//    @OptIn(ExperimentalWasmDsl::class)
-//    wasmJs {
-//        browser()
-//    }
-
     sourceSets {
         commonMain.dependencies {
             api(libs.ktor.client.core)
@@ -59,8 +54,4 @@ android {
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
-//    compileOptions {
-//        sourceCompatibility = JavaVersion.VERSION_11
-//        targetCompatibility = JavaVersion.VERSION_11
-//    }
 }
