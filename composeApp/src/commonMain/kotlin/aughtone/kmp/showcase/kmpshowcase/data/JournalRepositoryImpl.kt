@@ -3,6 +3,7 @@ package aughtone.kmp.showcase.kmpshowcase.data
 import aughtone.kmp.showcase.kmpshowcase.JournalEntry
 import aughtone.kmp.showcase.kmpshowcase.domain.JournalRepository
 import aughtone.kmp.showcase.kmpshowcase.Mood
+import aughtone.kmp.showcase.kmpshowcase.database.Database
 import aughtone.kmp.showcase.kmpshowcase.endpoints.JournalEntryResource
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -23,7 +24,10 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-class JournalRepositoryImpl(private val httpClient: HttpClient) : JournalRepository {
+class JournalRepositoryImpl(
+    private val httpClient: HttpClient,
+    private val databaseImpl: Database
+) : JournalRepository {
     private val _entries = MutableStateFlow<List<JournalEntry>>(emptyList())
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 

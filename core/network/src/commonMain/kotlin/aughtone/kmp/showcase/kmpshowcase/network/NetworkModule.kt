@@ -1,6 +1,5 @@
-package aughtone.kmp.showcase.kmpshowcase.di
+package aughtone.kmp.showcase.kmpshowcase.network
 
-import aughtone.kmp.showcase.kmpshowcase.network.httpClient
 import io.ktor.client.HttpClient
 import org.koin.core.module.Module
 import org.koin.dsl.module
