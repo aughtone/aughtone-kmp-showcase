@@ -3,18 +3,33 @@ package aughtone.kmp.showcase.kmpshowcase.database
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.core.okio.OkioStorage
 import aughtone.kmp.showcase.kmpshowcase.JournalEntry
+import kotlinx.coroutines.flow.Flow
+import okio.FileSystem
 import okio.Path.Companion.toPath
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-actual fun createDataStore(): DataStore<List<JournalEntry>> {
-    val context: Context by object : KoinComponent {
-        val context: Context by inject()
-    }.inject()
+private class AndroidJournalDataStore(
+    private val dataStore: DataStore<List<JournalEntry>>
+) : JournalDataStore {
+    override val data: Flow<List<JournalEntry>> = dataStore.data
 
-    return DataStoreFactory.create(
-        serializer = JournalEntrySerializer,
-        produceFile = { context.filesDir.resolve(DATASTORE_FILE_NAME).absolutePath.toPath() }
+    override suspend fun updateData(transform: suspend (List<JournalEntry>) -> List<JournalEntry>) {
+        dataStore.updateData(transform)
+    }
+}
+
+actual fun createDataStore(): JournalDataStore {
+    val context: Context by object : KoinComponent {}.inject()
+
+    val dataStore = DataStoreFactory.create(
+        storage = OkioStorage(
+            fileSystem = FileSystem.SYSTEM,
+            serializer = JournalEntrySerializer,
+            producePath = { context.filesDir.resolve(DATASTORE_FILE_NAME).absolutePath.toPath() }
+        )
     )
+    return AndroidJournalDataStore(dataStore)
 }

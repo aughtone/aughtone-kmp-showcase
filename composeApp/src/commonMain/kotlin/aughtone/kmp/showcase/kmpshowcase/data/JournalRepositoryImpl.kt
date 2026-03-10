@@ -26,7 +26,7 @@ import kotlinx.datetime.toLocalDateTime
 
 class JournalRepositoryImpl(
     private val httpClient: HttpClient,
-    private val databaseImpl: Database
+    private val database: Database
 ) : JournalRepository {
     private val _entries = MutableStateFlow<List<JournalEntry>>(emptyList())
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)

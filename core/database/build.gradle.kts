@@ -9,37 +9,48 @@ plugins {
 
 kotlin {
     androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
+        compilerOptions.jvmTarget.set(JvmTarget.JVM_11)
     }
-
-    iosArm64()
-    iosSimulatorArm64()
 
     jvm()
 
-    js(IR) {
-        browser()
-    }
+    js(IR) { browser() }
 
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser()
-    }
+    iosArm64()
+    iosSimulatorArm64()
 
     sourceSets {
         commonMain.dependencies {
             implementation(projects.shared)
             implementation(projects.serverApi)
-
-            implementation(libs.androidx.datastore.core)
-            implementation(libs.androidx.datastore.preferences)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.coroutines.core)
-
+            implementation(libs.okio)
             api(libs.koin.core)
         }
+
+        val nonWebMain by creating {
+            dependsOn(commonMain.get())
+            dependencies {
+                implementation(libs.androidx.datastore.core)
+                implementation(libs.androidx.datastore.core.okio)
+            }
+        }
+
+        androidMain.get().dependsOn(nonWebMain)
+        iosMain.get().dependsOn(nonWebMain)
+        iosArm64Main.get().dependsOn(iosMain.get())
+        iosSimulatorArm64Main.get().dependsOn(iosMain.get())
+        jvmMain.get().dependsOn(nonWebMain)
+
+        val webMain by creating {
+            dependsOn(commonMain.get())
+            dependencies {
+                implementation(libs.okio.fakefilesystem)
+            }
+        }
+
+        jsMain.get().dependsOn(webMain)
     }
 }
 
@@ -48,9 +59,5 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
     }
 }
