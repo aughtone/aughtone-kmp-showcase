@@ -10,12 +10,10 @@ kotlin {
     jvm()
 
     sourceSets {
-        val jvmMain by getting {
-            dependencies {
-                implementation(projects.composeApp)
-                implementation(libs.kotlinx.coroutinesSwing)
-                implementation(compose.desktop.currentOs)
-            }
+        jvmMain.dependencies {
+            implementation(projects.composeApp)
+            implementation(libs.kotlinx.coroutinesSwing)
+            implementation(compose.desktop.currentOs)
         }
     }
 }
