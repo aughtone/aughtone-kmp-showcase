@@ -1,31 +1,76 @@
 package aughtone.kmp.showcase.kmpshowcase.ui.list
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import aughtone.kmp.showcase.kmpshowcase.JournalEntry
 import aughtone.kmp.showcase.kmpshowcase.Mood
+import aughtone.kmp.showcase.kmpshowcase.ui.theme.ShowcaseTheme
 import coil3.compose.AsyncImage
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun ListScreen(
     modifier: Modifier = Modifier,
     viewModel: ListViewModel = koinViewModel()
 ) {
-    val entries by viewModel.entries.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    ListContent(
+        uiState = uiState,
+        onAddEntry = { title, content, mood -> viewModel.addEntry(title, content, mood) },
+        modifier = modifier
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ListContent(
+    uiState: ListUiState,
+    onAddEntry: (String, String, Mood) -> Unit,
+    modifier: Modifier = Modifier
+) {
     var showAddDialog by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -56,7 +101,7 @@ fun ListScreen(
             item {
                 HeaderImage()
             }
-            items(entries) { entry ->
+            items(uiState.entries) { entry ->
                 EntryItem(entry)
             }
         }
@@ -65,7 +110,7 @@ fun ListScreen(
             AddEntryDialog(
                 onDismiss = { showAddDialog = false },
                 onConfirm = { title, content, mood ->
-                    viewModel.addEntry(title, content, mood)
+                    onAddEntry(title, content, mood)
                     showAddDialog = false
                 }
             )
@@ -92,14 +137,15 @@ fun HeaderImage() {
 }
 
 @Composable
-fun EntryItem(entry: JournalEntry) {
+fun EntryItem(entry: ListUiState.Entry) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
-                modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -119,7 +165,7 @@ fun EntryItem(entry: JournalEntry) {
                 }
             }
             Text(
-                entry.date.toString(),
+                entry.date,
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.outline
             )
@@ -172,7 +218,8 @@ fun AddEntryDialog(
                         readOnly = true,
                         label = { Text("Mood") },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                        modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable).fillMaxWidth()
+                        modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
+                            .fillMaxWidth()
                     )
                     ExposedDropdownMenu(
                         expanded = expanded,
@@ -202,4 +249,48 @@ fun AddEntryDialog(
             }
         }
     )
+}
+
+@Preview
+@Composable
+fun ListScreenPreview() {
+    ShowcaseTheme {
+        ListContent(
+            uiState = ListUiState(
+                entries = listOf(
+                    ListUiState.Entry(
+                        id = "1",
+                        title = "A Great Day",
+                        date = "2023/10/27",
+                        content = "Today was an amazing day! I went for a walk and saw some beautiful trees.",
+                        mood = Mood.HAPPY
+                    ),
+                    ListUiState.Entry(
+                        id = "2",
+                        title = "Feeling Calm",
+                        date = "2023/10/27",
+                        content = "Spent the evening reading a book. It was very relaxing.",
+                        mood = Mood.CALM
+                    )
+                )
+            ),
+            onAddEntry = { _, _, _ -> }
+        )
+    }
+}
+
+@Preview
+@Composable
+fun EntryItemPreview() {
+    ShowcaseTheme {
+        EntryItem(
+            entry = ListUiState.Entry(
+                id = "1",
+                title = "A Great Day",
+                date = "2023/10/27",
+                content = "Today was an amazing day! I went for a walk and saw some beautiful trees.",
+                mood = Mood.HAPPY
+            )
+        )
+    }
 }

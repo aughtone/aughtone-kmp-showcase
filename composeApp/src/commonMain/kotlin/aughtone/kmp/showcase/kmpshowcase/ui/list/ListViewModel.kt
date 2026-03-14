@@ -7,15 +7,26 @@ import aughtone.kmp.showcase.kmpshowcase.domain.JournalRepository
 import aughtone.kmp.showcase.kmpshowcase.Mood
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.String
 
 class ListViewModel(
     private val repository: JournalRepository
 ) : ViewModel() {
 
-    val entries: StateFlow<List<JournalEntry>> = repository.getEntries()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val uiState: StateFlow<ListUiState> = repository.getEntries()
+        .map { entries ->
+            ListUiState(
+                entries = entries.map { entry -> entry.toUiModel() }
+            )
+        }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            ListUiState(emptyList())
+        )
 
     fun addEntry(title: String, content: String, mood: Mood) {
         viewModelScope.launch {
@@ -27,3 +38,11 @@ class ListViewModel(
         }
     }
 }
+
+private fun JournalEntry.toUiModel() = ListUiState.Entry(
+    id = id,
+    title = title,
+    date = date.toString(),
+    content = content,
+    mood = mood
+)
