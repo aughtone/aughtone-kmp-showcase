@@ -18,13 +18,10 @@ kotlin {
     }
 
     sourceSets {
-        val webMain by creating {
-            dependsOn(commonMain.get())
+        webMain.dependencies {
+
         }
-        val jsMain by getting {
-            dependsOn(webMain)
-        }
-        
+
         commonMain.dependencies {
             implementation(projects.composeApp)
             implementation(libs.compose.runtime)
