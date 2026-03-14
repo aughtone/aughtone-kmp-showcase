@@ -1,22 +1,24 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinMultiplatformLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
 }
 
 kotlin {
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
+    jvmToolchain(21)
 
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
+    android {
+        namespace = "aughtone.kmp.showcase.kmpshowcase"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
     }
 
     listOf(
@@ -88,19 +90,6 @@ kotlin {
     }
 }
 
-android {
-    namespace = "aughtone.kmp.showcase.kmpshowcase"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-}
-
-dependencies {
-    debugImplementation(libs.compose.uiTooling)
-}
+//dependencies {
+//    debugImplementation(libs.compose.uiTooling)
+//}
