@@ -1,4 +1,4 @@
-package aughtone.kmp.showcase.kmpshowcase.ui.journal.details
+package aughtone.kmp.showcase.kmpshowcase.feature.journal.details
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState

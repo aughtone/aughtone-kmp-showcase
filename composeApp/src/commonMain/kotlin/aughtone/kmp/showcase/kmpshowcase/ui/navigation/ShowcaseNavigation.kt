@@ -7,11 +7,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import aughtone.kmp.showcase.kmpshowcase.ui.journal.list.ListScreen
-import aughtone.kmp.showcase.kmpshowcase.ui.journal.details.DetailsScreen
+import aughtone.kmp.showcase.kmpshowcase.feature.journal.DetailsRoute
+import aughtone.kmp.showcase.kmpshowcase.feature.journal.ListRoute
+import aughtone.kmp.showcase.kmpshowcase.feature.journal.list.ListScreen
+import aughtone.kmp.showcase.kmpshowcase.feature.journal.details.DetailsScreen
 
-object ListRoute
-data class DetailsRoute(val id: String)
 
 @Composable
 fun ShowcaseNavigation(

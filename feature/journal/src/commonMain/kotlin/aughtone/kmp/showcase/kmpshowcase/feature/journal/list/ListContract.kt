@@ -1,4 +1,4 @@
-package aughtone.kmp.showcase.kmpshowcase.ui.journal.list
+package aughtone.kmp.showcase.kmpshowcase.feature.journal.list
 
 import aughtone.kmp.showcase.kmpshowcase.Mood
 

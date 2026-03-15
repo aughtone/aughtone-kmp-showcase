@@ -47,6 +47,7 @@ kotlin {
             implementation(projects.core.database)
             implementation(projects.core.design)
             implementation(projects.core.domain)
+            implementation(projects.feature.journal)
 
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)

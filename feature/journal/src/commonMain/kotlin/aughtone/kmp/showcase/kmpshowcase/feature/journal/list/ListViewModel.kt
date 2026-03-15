@@ -1,4 +1,4 @@
-package aughtone.kmp.showcase.kmpshowcase.ui.journal.list
+package aughtone.kmp.showcase.kmpshowcase.feature.journal.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlin.String
 
 class ListViewModel(
     private val repository: JournalRepository
