@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.*
 
 class DetailsViewModel(
     private val id: String,
-    private val repository: JournalRepository
+    repository: JournalRepository
 ) : ViewModel() {
 
     val uiState: StateFlow<DetailsUiState> = repository.getEntry(id)

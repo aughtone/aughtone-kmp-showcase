@@ -1,5 +1,6 @@
 package aughtone.kmp.showcase.kmpshowcase.ui.list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -104,12 +106,23 @@ fun HeaderImage() {
             .padding(bottom = 16.dp),
         shape = MaterialTheme.shapes.large
     ) {
-        AsyncImage(
-            model = "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop",
-            contentDescription = "Tranquil nature scene",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        if (LocalInspectionMode.current) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("Header Image Placeholder")
+            }
+        } else {
+            AsyncImage(
+                model = "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop",
+                contentDescription = "Tranquil nature scene",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
     }
 }
 
@@ -233,7 +246,7 @@ fun AddEntryDialog(
     )
 }
 
-@Preview
+@Preview(showBackground = true, locale = "en")
 @Composable
 fun ListScreenPreview() {
     ShowcaseTheme {
@@ -262,7 +275,7 @@ fun ListScreenPreview() {
     }
 }
 
-@Preview
+@Preview(showBackground = true, locale = "en")
 @Composable
 fun EntryItemPreview() {
     ShowcaseTheme {

@@ -124,7 +124,7 @@ private fun MoodTag(mood: Mood) {
     }
 }
 
-@Preview
+@Preview(showBackground = true, locale = "en")
 @Composable
 fun DetailsContentPreview() {
     ShowcaseTheme {

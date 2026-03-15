@@ -10,7 +10,7 @@ import aughtone.kmp.showcase.kmpshowcase.ui.navigation.ShowcaseNavigation
 import aughtone.kmp.showcase.kmpshowcase.ui.theme.ShowcaseTheme
 
 @Composable
-@Preview
+@Preview(showBackground = true, locale = "en")
 fun App() {
     ShowcaseTheme {
         ShowcaseNavigation(
