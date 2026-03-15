@@ -1,4 +1,4 @@
-package aughtone.kmp.showcase.kmpshowcase.ui.details
+package aughtone.kmp.showcase.kmpshowcase.ui.journal.details
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import aughtone.kmp.showcase.kmpshowcase.Mood
-import aughtone.kmp.showcase.kmpshowcase.ui.theme.ShowcaseTheme
+import aughtone.kmp.showcase.kmpshowcase.design.theme.ShowcaseTheme
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 

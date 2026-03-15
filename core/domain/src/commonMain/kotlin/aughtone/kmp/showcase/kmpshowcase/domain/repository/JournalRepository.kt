@@ -1,4 +1,4 @@
-package aughtone.kmp.showcase.kmpshowcase.domain
+package aughtone.kmp.showcase.kmpshowcase.domain.repository
 
 import aughtone.kmp.showcase.kmpshowcase.JournalEntry
 import aughtone.kmp.showcase.kmpshowcase.Mood

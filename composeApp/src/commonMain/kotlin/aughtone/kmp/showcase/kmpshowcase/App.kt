@@ -6,8 +6,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import aughtone.kmp.showcase.kmpshowcase.design.theme.ShowcaseTheme
 import aughtone.kmp.showcase.kmpshowcase.ui.navigation.ShowcaseNavigation
-import aughtone.kmp.showcase.kmpshowcase.ui.theme.ShowcaseTheme
 
 @Composable
 @Preview(showBackground = true, locale = "en")

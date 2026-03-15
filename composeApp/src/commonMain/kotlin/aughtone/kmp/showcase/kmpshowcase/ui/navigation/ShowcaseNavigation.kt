@@ -7,8 +7,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import aughtone.kmp.showcase.kmpshowcase.ui.list.ListScreen
-import aughtone.kmp.showcase.kmpshowcase.ui.details.DetailsScreen
+import aughtone.kmp.showcase.kmpshowcase.ui.journal.list.ListScreen
+import aughtone.kmp.showcase.kmpshowcase.ui.journal.details.DetailsScreen
 
 object ListRoute
 data class DetailsRoute(val id: String)

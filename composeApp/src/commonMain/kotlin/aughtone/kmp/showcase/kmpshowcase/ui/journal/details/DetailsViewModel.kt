@@ -1,8 +1,8 @@
-package aughtone.kmp.showcase.kmpshowcase.ui.details
+package aughtone.kmp.showcase.kmpshowcase.ui.journal.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import aughtone.kmp.showcase.kmpshowcase.domain.JournalRepository
+import aughtone.kmp.showcase.kmpshowcase.domain.repository.JournalRepository
 import kotlinx.coroutines.flow.*
 
 class DetailsViewModel(

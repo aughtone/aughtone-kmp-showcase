@@ -45,6 +45,8 @@ kotlin {
             implementation(projects.serverApi)
             implementation(projects.core.network)
             implementation(projects.core.database)
+            implementation(projects.core.design)
+            implementation(projects.core.domain)
 
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)

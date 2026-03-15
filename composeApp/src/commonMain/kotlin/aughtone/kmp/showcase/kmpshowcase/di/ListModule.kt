@@ -1,9 +1,9 @@
 package aughtone.kmp.showcase.kmpshowcase.di
 
-import aughtone.kmp.showcase.kmpshowcase.domain.JournalRepository
+import aughtone.kmp.showcase.kmpshowcase.domain.repository.JournalRepository
 import aughtone.kmp.showcase.kmpshowcase.data.JournalRepositoryImpl
-import aughtone.kmp.showcase.kmpshowcase.ui.list.ListViewModel
-import aughtone.kmp.showcase.kmpshowcase.ui.details.DetailsViewModel
+import aughtone.kmp.showcase.kmpshowcase.ui.journal.list.ListViewModel
+import aughtone.kmp.showcase.kmpshowcase.ui.journal.details.DetailsViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
