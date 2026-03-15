@@ -48,6 +48,8 @@ class JournalRepositoryImpl(
             entries.sortedByDescending { it.date } 
         }
 
+    override fun getEntry(id: String): Flow<JournalEntry?> = database.getEntry(id)
+
     override suspend fun addEntry(
         title: String,
         content: String,
