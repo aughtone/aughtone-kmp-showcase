@@ -42,9 +42,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.serverApi)
-            implementation(projects.core.network)
-            implementation(projects.core.database)
+            implementation(projects.core.data)
             implementation(projects.core.design)
             implementation(projects.core.domain)
             implementation(projects.feature.journal)
@@ -54,40 +52,15 @@ kotlin {
             implementation(libs.compose.material3)
             implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(libs.androidx.nav3.ui)
             implementation(libs.androidx.material3.adaptive)
             implementation(libs.androidx.material3.adaptive.nav3)
 
-            implementation(libs.coil.compose)
-            implementation(libs.coil.network.ktor3)
-
-            implementation(libs.kotlinx.datetime)
-            implementation(libs.compose.materialIconsCore)
-
             api(libs.koin.core)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
-
-            implementation(projects.core.network)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
-        }
-
-        androidMain.dependencies {
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.compose.uiTooling)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.koin.android)
-        }
-
-        jvmMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutinesSwing)
         }
     }
 }

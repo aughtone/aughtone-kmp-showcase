@@ -41,9 +41,18 @@ kotlin {
 
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
             implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor3)
+
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+        }
+
+        androidMain.dependencies {
+            // Fix: Add compose-uiTooling to resolve ClassNotFoundException: androidx.compose.ui.tooling.ComposeViewAdapter
+            // It should be in androidMain (or debugImplementation in android block) as it's not available for all KMP targets.
+            implementation(libs.compose.uiTooling)
         }
     }
 }
