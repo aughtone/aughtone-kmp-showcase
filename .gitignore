@@ -5,3 +5,7 @@ build
 .kotlin
 /kotlin-js-store/yarn.lock
 local.properties
+.DS_Store
+*.iml
+*/.DS_Store
+kotlin-js-store
