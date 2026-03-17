@@ -11,6 +11,7 @@ import io.ktor.client.plugins.resources.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import kotlin.time.Clock
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -19,7 +20,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
@@ -72,7 +72,7 @@ class JournalRepositoryImpl(private val httpClient: HttpClient) : JournalReposit
         }.body<JournalEntry>()
     }.onSuccess { createdEntry ->
         // Update the cache with the server's confirmed response (including the real ID)
-        _entries.value = _entries.value + createdEntry
+        _entries.value += createdEntry
     }.onFailure { e ->
         println("Failed to create journal entry on server: ${e.message}")
     }
