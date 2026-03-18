@@ -1,5 +1,7 @@
 This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop (JVM), and Server.
 
+![Infographic](infographic.png)
+
 ## Project Structure
 
 The project is organized into the following modules:
@@ -55,15 +57,8 @@ To build and run the development version of the server, use the run configuratio
 
 To build and run the development version of the web app, use the run configuration from the run widget in your IDE's toolbar or run it directly from the terminal:
 
-- for the Wasm target (faster, modern browsers):
-    - on macOS/Linux
-      ```shell
-      ./gradlew :composeApp:wasmJsBrowserDevelopmentRun
-      ```
-    - on Windows
-      ```shell
-      .\gradlew.bat :composeApp:wasmJsBrowserDevelopmentRun
-      ```
+- The Wasm target (faster, modern browsers) has been removed to keep things simple.
+  
 - for the JS target (slower, supports older browsers):
     - on macOS/Linux
       ```shell
