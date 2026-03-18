@@ -1,8 +1,10 @@
-package aughtone.kmp.showcase.kmpshowcase.data
+package aughtone.kmp.showcase.kmpshowcase.data.repository
 
 import aughtone.kmp.showcase.kmpshowcase.JournalEntryDto
 import aughtone.kmp.showcase.kmpshowcase.MoodDto
 import aughtone.kmp.showcase.kmpshowcase.database.Database
+import aughtone.kmp.showcase.kmpshowcase.database.model.JournalEntryEntity
+import aughtone.kmp.showcase.kmpshowcase.database.model.MoodEntity
 import aughtone.kmp.showcase.kmpshowcase.domain.model.JournalEntry
 import aughtone.kmp.showcase.kmpshowcase.domain.model.Mood
 import aughtone.kmp.showcase.kmpshowcase.domain.repository.JournalRepository
@@ -38,15 +40,15 @@ class JournalRepositoryImpl(
         scope.launch {
             try {
                 val remoteEntries: List<JournalEntryDto> = httpClient.get(JournalEntryResource()).body()
-                database.saveEntries(remoteEntries)
+                database.saveEntries(remoteEntries.map { it.toEntity() })
             } catch (e: Exception) {
                 println("Failed to fetch journal entries: ${e.message}")
             }
         }
     }
-    
+
     override fun getEntries(): Flow<List<JournalEntry>> = database.getEntries()
-        .map { entries -> 
+        .map { entries ->
             entries.sortedByDescending { it.date }
                 .map { it.toDomain() }
         }
@@ -60,10 +62,10 @@ class JournalRepositoryImpl(
         mood: Mood
     ): Result<JournalEntry> = runCatching {
         val now = Clock.System.now()
-        val today = now.toLocalDateTime(TimeZone.currentSystemDefault()).date
-        
+        val today = now.toLocalDateTime(TimeZone.Companion.currentSystemDefault()).date
+
         val newEntryDto = JournalEntryDto(
-            id = "", 
+            id = "",
             title = title,
             date = today,
             content = content,
@@ -76,12 +78,12 @@ class JournalRepositoryImpl(
             setBody(newEntryDto)
         }.body<JournalEntryDto>().toDomain()
     }.onSuccess { createdEntry ->
-        database.addEntry(createdEntry.toDto())
+        database.addEntry(createdEntry.toEntity())
     }.onFailure { e ->
         println("Failed to create journal entry on server: ${e.message}")
         // If network fails, we still want to save it locally
         val now = Clock.System.now()
-        val today = now.toLocalDateTime(TimeZone.currentSystemDefault()).date
+        val today = now.toLocalDateTime(TimeZone.Companion.currentSystemDefault()).date
         val offlineEntry = JournalEntry(
             id = "offline_${now.toEpochMilliseconds()}",
             title = title,
@@ -89,7 +91,55 @@ class JournalRepositoryImpl(
             content = content,
             mood = mood
         )
-        database.addEntry(offlineEntry.toDto())
+        database.addEntry(offlineEntry.toEntity())
+    }
+
+    private fun JournalEntryDto.toEntity(): JournalEntryEntity = JournalEntryEntity(
+        id = id,
+        title = title,
+        date = date,
+        content = content,
+        mood = mood.toEntity()
+    )
+
+    private fun MoodDto.toEntity(): MoodEntity = when (this) {
+        MoodDto.HAPPY -> MoodEntity.HAPPY
+        MoodDto.SAD -> MoodEntity.SAD
+        MoodDto.CALM -> MoodEntity.CALM
+        MoodDto.ENERGETIC -> MoodEntity.ENERGETIC
+        MoodDto.ANXIOUS -> MoodEntity.ANXIOUS
+    }
+
+    private fun JournalEntryEntity.toDomain(): JournalEntry = JournalEntry(
+        id = id,
+        title = title,
+        date = date,
+        content = content,
+        mood = mood.toDomain()
+    )
+
+    private fun MoodEntity.toDomain(): Mood = when (this) {
+        MoodEntity.HAPPY -> Mood.HAPPY
+        MoodEntity.SAD -> Mood.SAD
+        MoodEntity.CALM -> Mood.CALM
+        MoodEntity.ENERGETIC -> Mood.ENERGETIC
+        MoodEntity.ANXIOUS -> Mood.ANXIOUS
+    }
+
+    private fun JournalEntry.toEntity(): JournalEntryEntity = JournalEntryEntity(
+        id = id,
+        title = title,
+        date = date,
+        content = content,
+        mood = mood.toEntity()
+    )
+
+    private fun Mood.toEntity(): MoodEntity = when (this) {
+        Mood.HAPPY -> MoodEntity.HAPPY
+        Mood.SAD -> MoodEntity.SAD
+        Mood.CALM -> MoodEntity.CALM
+        Mood.ENERGETIC -> MoodEntity.ENERGETIC
+        Mood.ANXIOUS -> MoodEntity.ANXIOUS
     }
 
     private fun JournalEntryDto.toDomain(): JournalEntry = JournalEntry(
@@ -107,14 +157,6 @@ class JournalRepositoryImpl(
         MoodDto.ENERGETIC -> Mood.ENERGETIC
         MoodDto.ANXIOUS -> Mood.ANXIOUS
     }
-
-    private fun JournalEntry.toDto(): JournalEntryDto = JournalEntryDto(
-        id = id,
-        title = title,
-        date = date,
-        content = content,
-        mood = mood.toDto()
-    )
 
     private fun Mood.toDto(): MoodDto = when (this) {
         Mood.HAPPY -> MoodDto.HAPPY

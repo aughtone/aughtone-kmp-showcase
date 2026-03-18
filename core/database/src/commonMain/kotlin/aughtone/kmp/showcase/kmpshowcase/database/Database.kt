@@ -1,11 +1,11 @@
 package aughtone.kmp.showcase.kmpshowcase.database
 
-import aughtone.kmp.showcase.kmpshowcase.JournalEntryDto
+import aughtone.kmp.showcase.kmpshowcase.database.model.JournalEntryEntity
 import kotlinx.coroutines.flow.Flow
 
 interface Database {
-    fun getEntries(): Flow<List<JournalEntryDto>>
-    fun getEntry(id: String): Flow<JournalEntryDto?>
-    suspend fun saveEntries(entries: List<JournalEntryDto>)
-    suspend fun addEntry(entry: JournalEntryDto)
+    fun getEntries(): Flow<List<JournalEntryEntity>>
+    fun getEntry(id: String): Flow<JournalEntryEntity?>
+    suspend fun saveEntries(entries: List<JournalEntryEntity>)
+    suspend fun addEntry(entry: JournalEntryEntity)
 }
