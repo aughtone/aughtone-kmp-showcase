@@ -28,18 +28,18 @@ class JournalRepositoryImpl(private val httpClient: HttpClient) : JournalReposit
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     init {
-        fetchEntries()
+        scope.launch {
+            refreshEntries()
+        }
     }
 
-    private fun fetchEntries() {
-        scope.launch {
-            try {
-                val remoteEntries: List<JournalEntry> = httpClient.get(JournalEntryResource()).body()
-                _entries.value = remoteEntries
-            } catch (e: Exception) {
-                // Log or handle the fetch error as needed, keeping cached state in the meantime
-                println("Failed to fetch journal entries: ${e.message}")
-            }
+    override suspend fun refreshEntries() {
+        try {
+            val remoteEntries: List<JournalEntry> = httpClient.get(JournalEntryResource()).body()
+            _entries.value = remoteEntries
+        } catch (e: Exception) {
+            // Log or handle the fetch error as needed, keeping cached state in the meantime
+            println("Failed to fetch journal entries: ${e.message}")
         }
     }
     
