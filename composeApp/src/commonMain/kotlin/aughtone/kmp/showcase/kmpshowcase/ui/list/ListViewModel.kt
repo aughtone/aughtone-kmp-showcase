@@ -17,6 +17,12 @@ class ListViewModel(
     val entries: StateFlow<List<JournalEntry>> = repository.getEntries()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    fun refresh() {
+        viewModelScope.launch {
+            repository.refreshEntries()
+        }
+    }
+
     fun addEntry(title: String, content: String, mood: Mood) {
         viewModelScope.launch {
             repository.addEntry(title, content, mood)

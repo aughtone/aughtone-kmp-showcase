@@ -89,6 +89,7 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
+            implementation(libs.compose.uiTooling)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
             implementation(libs.ktor.client.cio)
@@ -105,12 +106,8 @@ kotlin {
         }
 
         webMain.dependencies {
-            implementation(libs.ktor.client.cio)
+            // Replaced CIO with no explicit engine because ktor-client-core includes the platform default (fetch for web)
         }
 
     }
 }
-
-//dependencies {
-//    debugImplementation(libs.compose.uiTooling)
-//}
