@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import aughtone.kmp.showcase.kmpshowcase.Mood
+import aughtone.kmp.showcase.kmpshowcase.domain.model.Mood
 import aughtone.kmp.showcase.kmpshowcase.design.theme.ShowcaseTheme
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf

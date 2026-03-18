@@ -1,7 +1,7 @@
 package aughtone.kmp.showcase.kmpshowcase.domain.repository
 
-import aughtone.kmp.showcase.kmpshowcase.JournalEntry
-import aughtone.kmp.showcase.kmpshowcase.Mood
+import aughtone.kmp.showcase.kmpshowcase.domain.model.JournalEntry
+import aughtone.kmp.showcase.kmpshowcase.domain.model.Mood
 import kotlinx.coroutines.flow.Flow
 
 interface JournalRepository {

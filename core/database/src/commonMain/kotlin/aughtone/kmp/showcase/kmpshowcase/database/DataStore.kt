@@ -1,11 +1,11 @@
 package aughtone.kmp.showcase.kmpshowcase.database
 
-import aughtone.kmp.showcase.kmpshowcase.JournalEntry
+import aughtone.kmp.showcase.kmpshowcase.JournalEntryDto
 import kotlinx.coroutines.flow.Flow
 
 interface JournalDataStore {
-    val data: Flow<List<JournalEntry>>
-    suspend fun updateData(transform: suspend (List<JournalEntry>) -> List<JournalEntry>)
+    val data: Flow<List<JournalEntryDto>>
+    suspend fun updateData(transform: suspend (List<JournalEntryDto>) -> List<JournalEntryDto>)
 }
 
 expect fun createDataStore(): JournalDataStore

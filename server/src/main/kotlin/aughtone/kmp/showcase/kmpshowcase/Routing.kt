@@ -26,7 +26,7 @@ fun Application.configureRouting() {
         }
 
         // Create a new entry
-        post<JournalEntryResource, JournalEntry> { _, newEntry ->
+        post<JournalEntryResource, JournalEntryDto> { _, newEntry ->
             val now = Clock.System.now()
             val today = now.toLocalDateTime(TimeZone.currentSystemDefault()).date
             
@@ -59,7 +59,7 @@ fun Application.configureRouting() {
         }
 
         // Update a specific entry
-        put<JournalEntryResource.Id, JournalEntry> { resource, updateData ->
+        put<JournalEntryResource.Id, JournalEntryDto> { resource, updateData ->
             val index = inMemoryJournalEntries.indexOfFirst { it.id == resource.id }
             
             if (index != -1) {

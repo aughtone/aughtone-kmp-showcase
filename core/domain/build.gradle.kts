@@ -27,6 +27,7 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.serverApi)
             implementation(libs.kotlinx.coroutines.core)
+            api(libs.kotlinx.datetime)
         }
     }
 }

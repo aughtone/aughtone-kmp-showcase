@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class JournalEntry(
+data class JournalEntryDto(
     @SerialName("id")
     val id: String,
     @SerialName("title")
@@ -15,11 +15,11 @@ data class JournalEntry(
     @SerialName("content")
     val content: String,
     @SerialName("mood")
-    val mood: Mood
+    val mood: MoodDto
 )
 
 @Serializable
-enum class Mood {
+enum class MoodDto {
     @SerialName("HAPPY")
     HAPPY, 
     @SerialName("SAD")

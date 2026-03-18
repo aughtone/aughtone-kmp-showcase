@@ -29,7 +29,6 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.core.design)
             implementation(projects.core.domain)
-            implementation(projects.serverApi)
 
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)

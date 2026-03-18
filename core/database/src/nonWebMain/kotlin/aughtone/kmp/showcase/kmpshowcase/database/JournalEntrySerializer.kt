@@ -1,16 +1,16 @@
 package aughtone.kmp.showcase.kmpshowcase.database
 
 import androidx.datastore.core.okio.OkioSerializer
-import aughtone.kmp.showcase.kmpshowcase.JournalEntry
+import aughtone.kmp.showcase.kmpshowcase.JournalEntryDto
 import kotlinx.serialization.json.Json
 import okio.BufferedSink
 import okio.BufferedSource
 import okio.use
 
-object JournalEntrySerializer : OkioSerializer<List<JournalEntry>> {
-    override val defaultValue: List<JournalEntry> = emptyList()
+object JournalEntrySerializer : OkioSerializer<List<JournalEntryDto>> {
+    override val defaultValue: List<JournalEntryDto> = emptyList()
 
-    override suspend fun readFrom(source: BufferedSource): List<JournalEntry> {
+    override suspend fun readFrom(source: BufferedSource): List<JournalEntryDto> {
         return try {
             Json.decodeFromString(source.readUtf8())
         } catch (e: Exception) {
@@ -18,7 +18,7 @@ object JournalEntrySerializer : OkioSerializer<List<JournalEntry>> {
         }
     }
 
-    override suspend fun writeTo(t: List<JournalEntry>, sink: BufferedSink) {
+    override suspend fun writeTo(t: List<JournalEntryDto>, sink: BufferedSink) {
         sink.use {
             it.writeUtf8(Json.encodeToString(t))
         }

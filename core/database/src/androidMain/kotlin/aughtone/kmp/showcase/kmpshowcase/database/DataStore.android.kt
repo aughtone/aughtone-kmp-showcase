@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.core.okio.OkioStorage
-import aughtone.kmp.showcase.kmpshowcase.JournalEntry
+import aughtone.kmp.showcase.kmpshowcase.JournalEntryDto
 import kotlinx.coroutines.flow.Flow
 import okio.FileSystem
 import okio.Path.Companion.toPath
@@ -12,11 +12,11 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 private class AndroidJournalDataStore(
-    private val dataStore: DataStore<List<JournalEntry>>
+    private val dataStore: DataStore<List<JournalEntryDto>>
 ) : JournalDataStore {
-    override val data: Flow<List<JournalEntry>> = dataStore.data
+    override val data: Flow<List<JournalEntryDto>> = dataStore.data
 
-    override suspend fun updateData(transform: suspend (List<JournalEntry>) -> List<JournalEntry>) {
+    override suspend fun updateData(transform: suspend (List<JournalEntryDto>) -> List<JournalEntryDto>) {
         dataStore.updateData(transform)
     }
 }

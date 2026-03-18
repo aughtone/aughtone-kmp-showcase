@@ -42,7 +42,7 @@ class JournalEntryResourceTest {
         val response = client.get("/journal-entries")
 
         assertEquals(HttpStatusCode.OK, response.status)
-        val entries: List<JournalEntry> = response.body()
+        val entries: List<JournalEntryDto> = response.body()
         assertTrue(entries.isEmpty())
     }
 
@@ -56,12 +56,12 @@ class JournalEntryResourceTest {
             }
         }
 
-        val newEntry = JournalEntry(
+        val newEntry = JournalEntryDto(
             id = "test-id",
             title = "Test Entry",
             date = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
             content = "This is a test entry",
-            mood = Mood.HAPPY
+            mood = MoodDto.HAPPY
         )
 
         val response = client.post("/journal-entries") {
@@ -71,10 +71,10 @@ class JournalEntryResourceTest {
 
         assertEquals(HttpStatusCode.Created, response.status)
         
-        val createdEntry: JournalEntry = response.body()
+        val createdEntry: JournalEntryDto = response.body()
         assertEquals("Test Entry", createdEntry.title)
         assertEquals("This is a test entry", createdEntry.content)
-        assertEquals(Mood.HAPPY, createdEntry.mood)
+        assertEquals(MoodDto.HAPPY, createdEntry.mood)
         
         assertEquals(1, inMemoryJournalEntries.size)
     }
@@ -83,12 +83,12 @@ class JournalEntryResourceTest {
     fun testGetSpecificJournalEntry() = testApplication {
         application { module() }
 
-        val testEntry = JournalEntry(
+        val testEntry = JournalEntryDto(
             id = "test-id-123",
             title = "Test Entry",
             date = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
             content = "This is a test entry",
-            mood = Mood.CALM
+            mood = MoodDto.CALM
         )
         inMemoryJournalEntries.add(testEntry)
 
@@ -101,7 +101,7 @@ class JournalEntryResourceTest {
         val response = client.get("/journal-entries/test-id-123")
 
         assertEquals(HttpStatusCode.OK, response.status)
-        val fetchedEntry: JournalEntry = response.body()
+        val fetchedEntry: JournalEntryDto = response.body()
         assertEquals("test-id-123", fetchedEntry.id)
         assertEquals("Test Entry", fetchedEntry.title)
     }
@@ -129,12 +129,12 @@ class JournalEntryResourceTest {
     fun testUpdateJournalEntry() = testApplication {
         application { module() }
 
-        val testEntry = JournalEntry(
+        val testEntry = JournalEntryDto(
             id = "test-id-update",
             title = "Old Title",
             date = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
             content = "Old content",
-            mood = Mood.SAD
+            mood = MoodDto.SAD
         )
         inMemoryJournalEntries.add(testEntry)
 
@@ -144,7 +144,7 @@ class JournalEntryResourceTest {
             }
         }
 
-        val updatedEntry = testEntry.copy(title = "New Title", mood = Mood.HAPPY)
+        val updatedEntry = testEntry.copy(title = "New Title", mood = MoodDto.HAPPY)
 
         val response = client.put("/journal-entries/test-id-update") {
             contentType(ContentType.Application.Json)
@@ -152,9 +152,9 @@ class JournalEntryResourceTest {
         }
 
         assertEquals(HttpStatusCode.OK, response.status)
-        val fetchedEntry: JournalEntry = response.body()
+        val fetchedEntry: JournalEntryDto = response.body()
         assertEquals("New Title", fetchedEntry.title)
-        assertEquals(Mood.HAPPY, fetchedEntry.mood)
+        assertEquals(MoodDto.HAPPY, fetchedEntry.mood)
         
         assertEquals("New Title", inMemoryJournalEntries.first().title)
     }
@@ -163,12 +163,12 @@ class JournalEntryResourceTest {
     fun testDeleteJournalEntry() = testApplication {
         application { module() }
 
-        val testEntry = JournalEntry(
+        val testEntry = JournalEntryDto(
             id = "test-id-delete",
             title = "To be deleted",
             date = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
             content = "Delete this",
-            mood = Mood.ANXIOUS
+            mood = MoodDto.ANXIOUS
         )
         inMemoryJournalEntries.add(testEntry)
 

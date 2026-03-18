@@ -2,9 +2,9 @@ package aughtone.kmp.showcase.kmpshowcase.feature.journal.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import aughtone.kmp.showcase.kmpshowcase.JournalEntry
+import aughtone.kmp.showcase.kmpshowcase.domain.model.JournalEntry
+import aughtone.kmp.showcase.kmpshowcase.domain.model.Mood
 import aughtone.kmp.showcase.kmpshowcase.domain.repository.JournalRepository
-import aughtone.kmp.showcase.kmpshowcase.Mood
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map

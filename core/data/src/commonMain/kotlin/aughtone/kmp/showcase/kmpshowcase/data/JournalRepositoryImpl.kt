@@ -1,8 +1,10 @@
 package aughtone.kmp.showcase.kmpshowcase.data
 
-import aughtone.kmp.showcase.kmpshowcase.JournalEntry
-import aughtone.kmp.showcase.kmpshowcase.Mood
+import aughtone.kmp.showcase.kmpshowcase.JournalEntryDto
+import aughtone.kmp.showcase.kmpshowcase.MoodDto
 import aughtone.kmp.showcase.kmpshowcase.database.Database
+import aughtone.kmp.showcase.kmpshowcase.domain.model.JournalEntry
+import aughtone.kmp.showcase.kmpshowcase.domain.model.Mood
 import aughtone.kmp.showcase.kmpshowcase.domain.repository.JournalRepository
 import aughtone.kmp.showcase.kmpshowcase.endpoints.JournalEntryResource
 import io.ktor.client.HttpClient
@@ -35,7 +37,7 @@ class JournalRepositoryImpl(
     private fun fetchEntries() {
         scope.launch {
             try {
-                val remoteEntries: List<JournalEntry> = httpClient.get(JournalEntryResource()).body()
+                val remoteEntries: List<JournalEntryDto> = httpClient.get(JournalEntryResource()).body()
                 database.saveEntries(remoteEntries)
             } catch (e: Exception) {
                 println("Failed to fetch journal entries: ${e.message}")
@@ -45,10 +47,12 @@ class JournalRepositoryImpl(
     
     override fun getEntries(): Flow<List<JournalEntry>> = database.getEntries()
         .map { entries -> 
-            entries.sortedByDescending { it.date } 
+            entries.sortedByDescending { it.date }
+                .map { it.toDomain() }
         }
 
     override fun getEntry(id: String): Flow<JournalEntry?> = database.getEntry(id)
+        .map { it?.toDomain() }
 
     override suspend fun addEntry(
         title: String,
@@ -58,21 +62,21 @@ class JournalRepositoryImpl(
         val now = Clock.System.now()
         val today = now.toLocalDateTime(TimeZone.currentSystemDefault()).date
         
-        val newEntry = JournalEntry(
+        val newEntryDto = JournalEntryDto(
             id = "", 
             title = title,
             date = today,
             content = content,
-            mood = mood
+            mood = mood.toDto()
         )
 
         // Push to the server
         httpClient.post(JournalEntryResource()) {
             contentType(ContentType.Application.Json)
-            setBody(newEntry)
-        }.body<JournalEntry>()
+            setBody(newEntryDto)
+        }.body<JournalEntryDto>().toDomain()
     }.onSuccess { createdEntry ->
-        database.addEntry(createdEntry)
+        database.addEntry(createdEntry.toDto())
     }.onFailure { e ->
         println("Failed to create journal entry on server: ${e.message}")
         // If network fails, we still want to save it locally
@@ -85,6 +89,38 @@ class JournalRepositoryImpl(
             content = content,
             mood = mood
         )
-        database.addEntry(offlineEntry)
+        database.addEntry(offlineEntry.toDto())
+    }
+
+    private fun JournalEntryDto.toDomain(): JournalEntry = JournalEntry(
+        id = id,
+        title = title,
+        date = date,
+        content = content,
+        mood = mood.toDomain()
+    )
+
+    private fun MoodDto.toDomain(): Mood = when (this) {
+        MoodDto.HAPPY -> Mood.HAPPY
+        MoodDto.SAD -> Mood.SAD
+        MoodDto.CALM -> Mood.CALM
+        MoodDto.ENERGETIC -> Mood.ENERGETIC
+        MoodDto.ANXIOUS -> Mood.ANXIOUS
+    }
+
+    private fun JournalEntry.toDto(): JournalEntryDto = JournalEntryDto(
+        id = id,
+        title = title,
+        date = date,
+        content = content,
+        mood = mood.toDto()
+    )
+
+    private fun Mood.toDto(): MoodDto = when (this) {
+        Mood.HAPPY -> MoodDto.HAPPY
+        Mood.SAD -> MoodDto.SAD
+        Mood.CALM -> MoodDto.CALM
+        Mood.ENERGETIC -> MoodDto.ENERGETIC
+        Mood.ANXIOUS -> MoodDto.ANXIOUS
     }
 }

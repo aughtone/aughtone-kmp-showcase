@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import aughtone.kmp.showcase.kmpshowcase.Mood
+import aughtone.kmp.showcase.kmpshowcase.domain.model.Mood
 import aughtone.kmp.showcase.kmpshowcase.design.theme.ShowcaseTheme
 import coil3.compose.AsyncImage
 import org.koin.compose.viewmodel.koinViewModel

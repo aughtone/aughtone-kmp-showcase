@@ -14,7 +14,7 @@ import org.slf4j.event.Level
 import schwarz.it.problem.details.Problem
 import schwarz.it.problem.details.ProblemSerializer
 
-val inMemoryJournalEntries = mutableListOf<JournalEntry>()
+val inMemoryJournalEntries = mutableListOf<JournalEntryDto>()
 
 fun main() {
     embeddedServer(Netty, port = SERVER_PORT, host = "0.0.0.0", module = Application::module)

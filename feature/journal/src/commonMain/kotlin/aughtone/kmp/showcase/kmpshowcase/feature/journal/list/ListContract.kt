@@ -1,6 +1,6 @@
 package aughtone.kmp.showcase.kmpshowcase.feature.journal.list
 
-import aughtone.kmp.showcase.kmpshowcase.Mood
+import aughtone.kmp.showcase.kmpshowcase.domain.model.Mood
 
 data class ListUiState(
     val entries: List<Entry> = emptyList()
