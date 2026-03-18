@@ -10,4 +10,4 @@ local.properties
 *.iml
 *.log
 *.tmp
-/kotlin-js-store/
+kotlin-js-store
