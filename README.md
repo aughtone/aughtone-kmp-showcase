@@ -1,5 +1,7 @@
 This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop (JVM), and Server.
 
+![Infographic](infographic.png)
+
 ## Project Structure
 
 The project is organized into the following modules:
