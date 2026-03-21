@@ -36,6 +36,10 @@ class ListViewModel(
                 }
         }
     }
+
+    fun refresh() {
+        TODO("Not yet implemented")
+    }
 }
 
 private fun JournalEntry.toUiModel() = ListUiState.Entry(

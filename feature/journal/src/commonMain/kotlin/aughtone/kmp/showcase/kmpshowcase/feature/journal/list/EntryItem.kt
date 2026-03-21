@@ -1,9 +1,12 @@
-package aughtone.kmp.showcase.kmpshowcase.ui.list
+package aughtone.kmp.showcase.kmpshowcase.feature.journal.list
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -15,14 +18,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import aughtone.kmp.showcase.kmpshowcase.JournalEntry
-import aughtone.kmp.showcase.kmpshowcase.Mood
-import kotlinx.datetime.LocalDate
+import aughtone.kmp.showcase.kmpshowcase.design.theme.ShowcaseTheme
+import aughtone.kmp.showcase.kmpshowcase.domain.model.Mood
 
 @Composable
-fun EntryItem(entry: JournalEntry) {
+fun EntryItem(
+    entry: ListUiState.Entry,
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -48,30 +53,31 @@ fun EntryItem(entry: JournalEntry) {
                 }
             }
             Text(
-                entry.date.toString(),
+                entry.date,
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.outline
             )
-            Column(modifier = Modifier.padding(vertical = 12.dp)) {
-                Text(
-                    entry.content,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                entry.content,
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true, locale = "en")
 @Composable
-fun EntryItemPreview() {
-    EntryItem(
-        entry = JournalEntry(
-            id = "1",
-            title = "A Great Day",
-            date = LocalDate(2024, 1, 1),
-            content = "Today was a great day. I went to the park and saw a dog.",
-            mood = Mood.HAPPY
+private fun EntryItemPreview() {
+    ShowcaseTheme {
+        EntryItem(
+            entry = ListUiState.Entry(
+                id = "1",
+                title = "A Great Day",
+                date = "2023/10/27",
+                content = "Today was an amazing day! I went for a walk and saw some beautiful trees.",
+                mood = Mood.HAPPY
+            )
         )
-    )
+    }
 }
