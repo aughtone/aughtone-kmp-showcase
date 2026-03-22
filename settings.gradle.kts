@@ -40,15 +40,20 @@ plugins {
 }
 
 include(":composeApp")
-include(":androidApp")
-include(":desktopApp")
-include(":webApp")
 include(":server")
-include(":shared")
-include(":core:network")
 include(":server-api")
-include(":core:database")
-include(":core:design")
-include(":core:domain")
-include(":feature:journal")
-include(":core:data")
+
+// Automatically include app modules
+file("app").listFiles()?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }?.forEach {
+    include(":app:${it.name}")
+}
+
+// Automatically include core modules
+file("core").listFiles()?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }?.forEach {
+    include(":core:${it.name}")
+}
+
+// Automatically include feature modules
+file("feature").listFiles()?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }?.forEach {
+    include(":feature:${it.name}")
+}

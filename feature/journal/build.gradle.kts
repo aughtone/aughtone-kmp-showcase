@@ -41,8 +41,8 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
-            implementation(libs.coil.compose)
-            implementation(libs.coil.network.ktor3)
+            api(libs.coil.compose)
+            api(libs.coil.network.ktor3)
 
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)

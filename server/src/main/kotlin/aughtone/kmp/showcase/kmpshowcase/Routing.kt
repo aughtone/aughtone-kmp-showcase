@@ -7,7 +7,7 @@ import io.ktor.server.request.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import schwarz.it.problem.details.Problem
@@ -15,7 +15,7 @@ import schwarz.it.problem.details.Problem
 fun Application.configureRouting() {
     routing {
         get("/") {
-            call.respondText("Ktor: ${Greeting().greet()}")
+            call.respondText("Ktor: hello}")
         }
 
         // --- JournalEntryResource Routes ---

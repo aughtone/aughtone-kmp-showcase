@@ -121,14 +121,7 @@ private fun HeaderImage(
         shape = MaterialTheme.shapes.large
     ) {
         if (LocalInspectionMode.current) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.surfaceVariant),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("Header Image Placeholder")
-            }
+            PlaceholderImage(modifier = Modifier.fillMaxSize())
         } else {
             AsyncImage(
                 model = "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop",
@@ -137,6 +130,17 @@ private fun HeaderImage(
                 contentScale = ContentScale.Crop
             )
         }
+    }
+}
+
+@Composable
+private fun PlaceholderImage(modifier: Modifier) {
+    Box(
+        modifier = modifier
+            .background(MaterialTheme.colorScheme.surfaceVariant),
+        contentAlignment = Alignment.Center
+    ) {
+        Text("Header Image Placeholder")
     }
 }
 
