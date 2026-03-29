@@ -10,15 +10,26 @@ This document is a comprehensive guide for developers and AI agents contributing
 
 ## Module Structure
 
-The project is organized into the following modules:
+The project is organized into a modular architecture to promote separation of concerns and scalability.
 
-*   **`:androidApp`**: The native Android application target. Contains the `MainActivity`, `AndroidManifest.xml`, and any Android-specific startup logic.
-*   **`:iosApp`**: The native iOS application target. Contains the SwiftUI entry point and iOS-specific configurations.
-*   **`:desktopApp`**: The native desktop application target for JVM. Contains the desktop window setup and entry point.
-*   **`:webApp`**: The native web application target (Kotlin/Wasm or Kotlin/JS). Contains the web-specific entry point and configurations.
-*   **`:composeApp`**: Serves as the main common application structure using Compose Multiplatform. It acts as the shared app entry point, bringing together the UI, features, and cross-platform setup.
-*   **`:shared`**: Contains common business logic, data models (e.g., `JournalEntry`), Ktor resources, and shared utilities utilized across all clients and the backend server.
-*   **`:server`**: The Ktor backend application. It provides the REST API endpoints and backend logic for the KMP clients to consume.
+### Apps
+*   **`:app:android`**: The native Android application target. Contains the `MainActivity`, `AndroidManifest.xml`, and any Android-specific startup logic.
+*   **`:app:ios`**: The native iOS application target. Contains the SwiftUI entry point and iOS-specific configurations.
+*   **`:app:desktop`**: The native desktop application target for JVM. Contains the desktop window setup and entry point.
+*   **`:app:web`**: The native web application target (Kotlin/Wasm or JS). Contains the web-specific entry point and configurations.
+*   **`:shared:composeApp`**: Shared UI and app structure using Compose Multiplatform. It acts as the shared app entry point, bringing together the UI, features, and cross-platform setup.
+*   **`:server`**: The Ktor backend application. It provides the REST API endpoints and backend logic.
+*   **`:shared:server-api`**: Shared API definitions, request/response models, and Ktor resources used by both client and server.
+
+### Features
+*   **`:shared:feature:*`**: Feature-specific modules (e.g., `:shared:feature:journal`). Each feature module should contain its own UI, ViewModels/StateHolders, and internal business logic. Feature modules should be independent and only depend on `:shared:core` modules.
+
+### Core
+*   **`:shared:core:database`**: Local data persistence.
+*   **`:shared:core:network`**: Network communication logic using Ktor client.
+*   **`:shared:core:data`**: Data layer coordinating between local and remote sources. Contains repository implementations.
+*   **`:shared:core:domain`**: Shared business logic, use cases, and domain models.
+*   **`:shared:core:design`**: Shared design system, UI components, and theming.
 
 ## Development Guidelines
 
@@ -32,7 +43,7 @@ The project is organized into the following modules:
 
 ### Testing
 
-*   **No Mock Libraries**: You must **never** use any mock libraries (e.g., MockK, Mockito). KMP projects do not have reliable mock libraries, and they can muddy the code. Use manually created **fakes and stubs** instead. (More detailed instructions will be included in the project's `README.md`).
+*   **No Mock Libraries**: You must **never** use any mock libraries (e.g., MockK, Mockito). KMP projects do not have reliable mock libraries, and they can muddy the code. Use manually created **fakes and stubs** instead.
 *   **Language**: When writing unit tests, you must always use Kotlin.
 *   **Location**: Unit tests should be placed in `src/commonTest/kotlin` in accordance with multiplatform projects.
 *   **Coroutines**: When testing code that uses coroutines, use `runTest` from the `kotlinx-coroutines-test` library instead of `runBlocking`.

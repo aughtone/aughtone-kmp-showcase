@@ -14,7 +14,8 @@ application {
 }
 
 dependencies {
-    implementation(projects.serverApi)
+    implementation(projects.shared.serverApi)
+
     implementation(libs.logback)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
