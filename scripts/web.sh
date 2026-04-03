@@ -1,2 +1,2 @@
 #!/bin/sh
-./gradlew :webApp:jsBrowserDevelopmentRun
+./gradlew :app:web:jsBrowserDevelopmentRun

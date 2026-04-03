@@ -42,9 +42,9 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.shared.core.data)
-            implementation(projects.shared.core.design)
-            implementation(projects.shared.core.domain)
+            implementation(projects.core.data)
+            implementation(projects.core.design)
+            implementation(projects.core.domain)
             implementation(projects.shared.feature.journal)
 
             implementation(libs.compose.runtime)

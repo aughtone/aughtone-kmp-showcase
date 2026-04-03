@@ -1,2 +1,2 @@
 #!/bin/sh
-./gradlew :desktopApp:run
+./gradlew :app:desktop:run

@@ -17,19 +17,19 @@ The project is organized into a modular architecture to promote separation of co
 *   **`:app:ios`**: The native iOS application target. Contains the SwiftUI entry point and iOS-specific configurations.
 *   **`:app:desktop`**: The native desktop application target for JVM. Contains the desktop window setup and entry point.
 *   **`:app:web`**: The native web application target (Kotlin/Wasm or JS). Contains the web-specific entry point and configurations.
-*   **`:shared:composeApp`**: Shared UI and app structure using Compose Multiplatform. It acts as the shared app entry point, bringing together the UI, features, and cross-platform setup.
-*   **`:server`**: The Ktor backend application. It provides the REST API endpoints and backend logic.
+*   **`:app:common`**: Shared UI and app structure using Compose Multiplatform. It acts as the shared app entry point, bringing together the UI, features, and cross-platform setup.
+*   **`:app:server`**: The Ktor backend application. It provides the REST API endpoints and backend logic.
 *   **`:shared:server-api`**: Shared API definitions, request/response models, and Ktor resources used by both client and server.
 
 ### Features
-*   **`:shared:feature:*`**: Feature-specific modules (e.g., `:shared:feature:journal`). Each feature module should contain its own UI, ViewModels/StateHolders, and internal business logic. Feature modules should be independent and only depend on `:shared:core` modules.
+*   **`:shared:feature:*`**: Feature-specific modules (e.g., `:shared:feature:journal`). Each feature module should contain its own UI, ViewModels/StateHolders, and internal business logic. Feature modules should be independent and only depend on `:core` modules.
 
 ### Core
-*   **`:shared:core:database`**: Local data persistence.
-*   **`:shared:core:network`**: Network communication logic using Ktor client.
-*   **`:shared:core:data`**: Data layer coordinating between local and remote sources. Contains repository implementations.
-*   **`:shared:core:domain`**: Shared business logic, use cases, and domain models.
-*   **`:shared:core:design`**: Shared design system, UI components, and theming.
+*   **`:core:database`**: Local data persistence.
+*   **`:core:network`**: Network communication logic using Ktor client.
+*   **`:core:data`**: Data layer coordinating between local and remote sources. Contains repository implementations.
+*   **`:core:domain`**: Shared business logic, use cases, and domain models.
+*   **`:core:design`**: Shared design system, UI components, and theming.
 
 ## Development Guidelines
 

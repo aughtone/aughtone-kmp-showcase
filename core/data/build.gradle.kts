@@ -25,9 +25,9 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.shared.core.domain)
-            implementation(projects.shared.core.network)
-            implementation(projects.shared.core.database)
+            implementation(projects.core.domain)
+            implementation(projects.core.network)
+            implementation(projects.core.database)
             implementation(projects.shared.serverApi)
             
             implementation(libs.ktor.client.core)

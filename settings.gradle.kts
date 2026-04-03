@@ -39,16 +39,14 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-include(":server")
-
 // Automatically include shared modules
 file("shared").listFiles()?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }?.forEach {
     include(":shared:${it.name}")
 }
 
-// Automatically include nested core modules
-file("shared/core").listFiles()?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }?.forEach {
-    include(":shared:core:${it.name}")
+// Automatically include core modules
+file("core").listFiles()?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }?.forEach {
+    include(":core:${it.name}")
 }
 
 // Automatically include nested feature modules
