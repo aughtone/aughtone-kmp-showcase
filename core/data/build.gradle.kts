@@ -28,7 +28,7 @@ kotlin {
             implementation(projects.core.domain)
             implementation(projects.core.network)
             implementation(projects.core.database)
-            implementation(projects.shared.serverApi)
+            implementation(projects.core.api)
             
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.resources)

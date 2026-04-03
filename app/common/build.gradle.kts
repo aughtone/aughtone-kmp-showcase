@@ -45,7 +45,7 @@ kotlin {
             implementation(projects.core.data)
             implementation(projects.core.design)
             implementation(projects.core.domain)
-            implementation(projects.shared.feature.journal)
+            implementation(projects.feature.journal)
 
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)

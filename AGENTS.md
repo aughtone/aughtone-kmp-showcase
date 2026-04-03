@@ -19,10 +19,10 @@ The project is organized into a modular architecture to promote separation of co
 *   **`:app:web`**: The native web application target (Kotlin/Wasm or JS). Contains the web-specific entry point and configurations.
 *   **`:app:common`**: Shared UI and app structure using Compose Multiplatform. It acts as the shared app entry point, bringing together the UI, features, and cross-platform setup.
 *   **`:app:server`**: The Ktor backend application. It provides the REST API endpoints and backend logic.
-*   **`:shared:server-api`**: Shared API definitions, request/response models, and Ktor resources used by both client and server.
+*   **`:core:api`**: Shared API definitions, request/response models, and Ktor resources used by both client and server.
 
 ### Features
-*   **`:shared:feature:*`**: Feature-specific modules (e.g., `:shared:feature:journal`). Each feature module should contain its own UI, ViewModels/StateHolders, and internal business logic. Feature modules should be independent and only depend on `:core` modules.
+*   **`:feature:*`**: Feature-specific modules (e.g., `:feature:journal`). Each feature module should contain its own UI, ViewModels/StateHolders, and internal business logic. Feature modules should be independent and only depend on `:core` modules.
 
 ### Core
 *   **`:core:database`**: Local data persistence.

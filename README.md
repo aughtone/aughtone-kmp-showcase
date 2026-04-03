@@ -10,8 +10,8 @@ A Kotlin Multiplatform (KMP) template project using Compose Multiplatform, Ktor,
 *   **`:app:desktop`**: The native desktop application target for JVM.
 *   **`:app:web`**: The native web application target (Kotlin/Wasm).
 *   **`:app:server`**: The Ktor backend application.
-*   **`:shared:server-api`**: Shared models and endpoints for both client and server.
-*   **`:shared:feature`**: Feature-specific modules.
+*   **`:core:api`**: Shared models and endpoints for both client and server.
+*   **`:feature`**: Feature-specific modules.
 *   **`:core`**: Core infrastructure modules (Data, Domain, Network, Database, Design).
 
 ## Getting Started

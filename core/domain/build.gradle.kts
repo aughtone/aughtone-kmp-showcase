@@ -25,7 +25,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.shared.serverApi)
+            implementation(projects.core.api)
             implementation(libs.kotlinx.coroutines.core)
             api(libs.kotlinx.datetime)
         }
