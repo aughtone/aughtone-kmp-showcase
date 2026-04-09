@@ -1,6 +1,5 @@
 package aughtone.kmp.showcase.kmpshowcase.feature.journal.list
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

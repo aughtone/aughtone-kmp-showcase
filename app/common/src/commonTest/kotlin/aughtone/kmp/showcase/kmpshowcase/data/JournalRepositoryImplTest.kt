@@ -1,6 +1,9 @@
 package aughtone.kmp.showcase.kmpshowcase.data
 
-import aughtone.kmp.showcase.kmpshowcase.Mood
+import aughtone.kmp.showcase.kmpshowcase.data.repository.JournalRepositoryImpl
+import aughtone.kmp.showcase.kmpshowcase.database.Database
+import aughtone.kmp.showcase.kmpshowcase.database.model.JournalEntryEntity
+import aughtone.kmp.showcase.kmpshowcase.domain.model.Mood
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
@@ -12,6 +15,7 @@ import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
@@ -41,7 +45,26 @@ class JournalRepositoryImplTest {
             install(Resources)
         }
 
-        val repository = JournalRepositoryImpl(client)
+        val mockDatabase = object : Database {
+            override fun getEntries(): Flow<List<JournalEntryEntity>> {
+                TODO("Not yet implemented")
+            }
+
+            override fun getEntry(id: String): Flow<JournalEntryEntity?> {
+                TODO("Not yet implemented")
+            }
+
+            override suspend fun saveEntries(entries: List<JournalEntryEntity>) {
+                TODO("Not yet implemented")
+            }
+
+            override suspend fun addEntry(entry: JournalEntryEntity) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        val repository = JournalRepositoryImpl(client, mockDatabase)
         
         repository.refreshEntries()
 
