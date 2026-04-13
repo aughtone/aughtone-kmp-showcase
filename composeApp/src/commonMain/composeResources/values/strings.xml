@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Journal</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_add_entry">Add Entry</string>
+    <string name="image_desc_nature">Tranquil nature scene</string>
+    <string name="dialog_new_entry_title">New Entry</string>
+</resources>

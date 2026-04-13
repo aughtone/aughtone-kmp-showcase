@@ -15,6 +15,17 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import aughtone.kmp.showcase.kmpshowcase.Mood
 import coil3.compose.AsyncImage
+import kmpshowcase.composeapp.generated.resources.Res
+import kmpshowcase.composeapp.generated.resources.action_add_entry
+import kmpshowcase.composeapp.generated.resources.action_refresh
+import kmpshowcase.composeapp.generated.resources.app_name
+import kmpshowcase.composeapp.generated.resources.button_cancel
+import kmpshowcase.composeapp.generated.resources.dialog_new_entry_title
+import kmpshowcase.composeapp.generated.resources.image_desc_nature
+import kmpshowcase.composeapp.generated.resources.label_content
+import kmpshowcase.composeapp.generated.resources.label_mood
+import kmpshowcase.composeapp.generated.resources.label_title
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 
@@ -31,10 +42,10 @@ fun ListScreen(
         modifier = modifier,
         topBar = {
             LargeTopAppBar(
-                title = { Text("Journal") },
+                title = { Text(stringResource(Res.string.app_name)) },
                 actions = {
                     IconButton(onClick = { viewModel.refresh() }) {
-                        Icon(Icons.Default.Refresh, contentDescription = "Refresh")
+                        Icon(Icons.Default.Refresh, contentDescription = stringResource(Res.string.action_refresh))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -48,7 +59,7 @@ fun ListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { showAddDialog = true }) {
-                Icon(Icons.Default.Add, contentDescription = "Add Entry")
+                Icon(Icons.Default.Add, contentDescription = stringResource(Res.string.action_add_entry))
             }
         }
     ) { padding ->
@@ -88,7 +99,7 @@ fun HeaderImage() {
     ) {
         AsyncImage(
             model = "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop",
-            contentDescription = "Tranquil nature scene",
+            contentDescription = stringResource(Res.string.image_desc_nature),
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
@@ -108,19 +119,19 @@ fun AddEntryDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("New Entry") },
+        title = { Text(stringResource(Res.string.dialog_new_entry_title)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("Title") },
+                    label = { Text(stringResource(Res.string.label_title)) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = content,
                     onValueChange = { content = it },
-                    label = { Text("What's on your mind?") },
+                    label = { Text(stringResource(Res.string.label_content)) },
                     modifier = Modifier.fillMaxWidth(),
                     minLines = 3
                 )
@@ -133,7 +144,7 @@ fun AddEntryDialog(
                         value = mood.toString(),
                         onValueChange = {},
                         readOnly = true,
-                        label = { Text("Mood") },
+                        label = { Text(stringResource(Res.string.label_mood)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                         modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable).fillMaxWidth()
                     )
@@ -156,12 +167,12 @@ fun AddEntryDialog(
         },
         confirmButton = {
             Button(onClick = { onConfirm(title, content, mood) }) {
-                Text("Add Entry")
+                Text(stringResource(Res.string.action_add_entry))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(Res.string.button_cancel))
             }
         }
     )
