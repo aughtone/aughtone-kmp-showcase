@@ -40,8 +40,8 @@ plugins {
 }
 
 // Automatically include lib modules
-file("lib").listFiles()?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }?.forEach {
-    include(":lib:${it.name}")
+file("libs").listFiles()?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }?.forEach {
+    include(":libs:${it.name}")
 }
 
 // Automatically include core modules

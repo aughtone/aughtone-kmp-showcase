@@ -46,8 +46,7 @@ fun ListScreen(
     ListContent(
         uiState = uiState,
         onEntryClick = onEntryClick,
-        onAddEntry = { title, content, mood -> viewModel.addEntry(title, content, mood) },
-        onRefresh = { viewModel.refresh() },
+        onEvent = viewModel::onEvent,
         modifier = modifier
     )
 }
@@ -57,8 +56,7 @@ fun ListScreen(
 private fun ListContent(
     uiState: ListUiState,
     onEntryClick: (String) -> Unit,
-    onAddEntry: (String, String, Mood) -> Unit,
-    onRefresh: () -> Unit = {},
+    onEvent: (ListUiEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var showAddDialog by remember { mutableStateOf(false) }
@@ -69,7 +67,7 @@ private fun ListContent(
             LargeTopAppBar(
                 title = { Text(stringResource(Res.string.app_name)) },
                 actions = {
-                    IconButton(onClick = { onRefresh() }) {
+                    IconButton(onClick = { onEvent(ListUiEvent.Refresh) }) {
                         Icon(Icons.Default.Refresh, contentDescription = stringResource(Res.string.action_refresh))
                     }
                 },
@@ -115,7 +113,7 @@ private fun ListContent(
             AddEntryDialog(
                 onDismiss = { showAddDialog = false },
                 onConfirm = { title, content, mood ->
-                    onAddEntry(title, content, mood)
+                    onEvent(ListUiEvent.AddEntry(title, content, mood))
                     showAddDialog = false
                 }
             )
@@ -252,7 +250,7 @@ private fun ListScreenPreview() {
                 )
             ),
             onEntryClick = {},
-            onAddEntry = { _, _, _ -> }
+            onEvent = {}
         )
     }
 }

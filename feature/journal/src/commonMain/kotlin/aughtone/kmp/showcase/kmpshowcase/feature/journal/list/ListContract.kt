@@ -13,3 +13,8 @@ data class ListUiState(
         val mood: Mood
     )
 }
+
+sealed interface ListUiEvent {
+    data class AddEntry(val title: String, val content: String, val mood: Mood) : ListUiEvent
+    data object Refresh : ListUiEvent
+}

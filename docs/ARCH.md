@@ -20,7 +20,7 @@ The project is divided into several top-level directories:
     - `:core:data`: Implementation of data access logic. Contains repository implementations, local data sources (e.g., Prefs), and DI configuration for data.
     - `:core:api`: Networking logic and API definitions. Contains Ktor-based API clients, API response models, and endpoint resources.
     - `:core:design`: Contains generic, reusable UI components (e.g., SearchBar, buttons, cards) and common UI utilities.
-- **`lib/`**: Shared library modules providing foundational services.
+- **`libs/`**: Shared library modules providing foundational services.
     - `libs:network`: Ktor-based networking.
     - `libs:database`: SQLDelight-based local storage.
     - `libs:version`: Versioning and metadata.

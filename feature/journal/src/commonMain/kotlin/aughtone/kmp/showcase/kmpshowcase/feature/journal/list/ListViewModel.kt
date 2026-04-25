@@ -27,7 +27,14 @@ class ListViewModel(
             ListUiState(emptyList())
         )
 
-    fun addEntry(title: String, content: String, mood: Mood) {
+    fun onEvent(event: ListUiEvent) {
+        when (event) {
+            is ListUiEvent.AddEntry -> addEntry(event.title, event.content, event.mood)
+            is ListUiEvent.Refresh -> refresh()
+        }
+    }
+
+    private fun addEntry(title: String, content: String, mood: Mood) {
         viewModelScope.launch {
             repository.addEntry(title, content, mood)
                 .onFailure { e ->
@@ -37,7 +44,7 @@ class ListViewModel(
         }
     }
 
-    fun refresh() {
+    private fun refresh() {
         viewModelScope.launch {
             repository.refreshEntries()
         }
