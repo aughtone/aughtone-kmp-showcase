@@ -38,7 +38,9 @@ class ListViewModel(
     }
 
     fun refresh() {
-        TODO("Not yet implemented")
+        viewModelScope.launch {
+            repository.refreshEntries()
+        }
     }
 }
 

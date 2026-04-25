@@ -36,6 +36,10 @@ class JournalRepositoryImpl(
         fetchEntries()
     }
 
+    override suspend fun refreshEntries() {
+        fetchEntries()
+    }
+
     private fun fetchEntries() {
         scope.launch {
             try {

@@ -1,4 +1,4 @@
-package aughtone.kmp.showcase.kmpshowcase.ui.navigation
+package aughtone.kmp.showcase.kmpshowcase.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
