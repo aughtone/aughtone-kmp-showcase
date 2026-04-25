@@ -11,6 +11,7 @@ local.properties
 *.log
 *.tmp
 kotlin-js-store
+/.vscode/
 
 # Xcode
 #
