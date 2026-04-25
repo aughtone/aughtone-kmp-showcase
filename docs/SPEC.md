@@ -1,3 +1,15 @@
-Create a modern KMP Journaling app. The home screen should display a list of past entries sorted by date, as well as a button to create new entries. When creating a new entry, include fields for title, date, content, and a drop-down to select my mood.
+# Functional Specifications
 
-The app should have a modern look, using Material 3. Incorporate images of tranquil nature scenes into the header.
+This document outlines the functional constraints, business logic rules, and domain behavior for the Journaling app.
+
+## Core Features
+
+- **Home Screen**: Displays a list of past entries sorted by date.
+- **Entry Creation**: 
+    - Fields: Title, Date, Content.
+    - Mood Selection: A drop-down to select the user's mood.
+
+## Visual Requirements
+
+- **Modern Look**: Consistent use of Material 3 components and themes.
+- **Theming**: tranquil nature scenes should be incorporated into the header sections of the application.

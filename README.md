@@ -1,54 +1,23 @@
-# kmpshowcase
+# Aughtone KMP Showcase
 
-A Kotlin Multiplatform (KMP) template project using Compose Multiplatform, Ktor, and Koin.
+Welcome to the Aughtone KMP Showcase, a modern Journaling application built with Kotlin Multiplatform. This project demonstrates best practices in cross-platform development, Clean Architecture, and Compose Multiplatform.
 
-## Project Structure
+## Project Sectors
 
-*   **`:app:common`**: Shared UI and application logic.
-*   **`:app:android`**: The native Android application target.
-*   **`:app:ios`**: The native iOS application target.
-*   **`:app:desktop`**: The native desktop application target for JVM.
-*   **`:app:web`**: The native web application target (Kotlin/Wasm).
-*   **`:app:server`**: The Ktor backend application.
-*   **`:core:api`**: Shared models and endpoints for both client and server.
-*   **`:feature`**: Feature-specific modules.
-*   **`:core`**: Core infrastructure modules (Data, Domain, Network, Database, Design).
+Select a gateway below to explore the repository's documentation and specifications:
 
-## Getting Started
+- 📖 **The Developer Guide** -> [docs/DEVELOPER.md](docs/DEVELOPER.md)
+  *Compiler commands, local environment setup, and module descriptions.*
 
-### Prerequisites
+- 📐 **Architecture Guidelines** -> [docs/ARCH.md](docs/ARCH.md)
+  *Global engineering rules, repository synchronization patterns, and coding standards.*
 
-*   Android Studio Ladybug or later.
-*   Xcode 15+ (for iOS development).
-*   JDK 21.
+- 🧠 **Functional Specifications** -> [docs/SPEC.md](docs/SPEC.md)
+  *Business logic, functional constraints, and domain behavior.*
 
-### Running the Applications
+- 🎨 **Design & UI Rules** -> [docs/DESIGN.md](docs/DESIGN.md)
+  *Frontend component principles, Material 3 usage, and visual assets.*
 
-#### Android
-Open the project in Android Studio and run the `androidApp` configuration.
+---
 
-#### iOS
-Open the `app/ios` directory in Xcode or run from Android Studio.
-
-#### Desktop
-Run the desktop application:
-```bash
-./gradlew :app:desktop:run
-```
-
-#### Web
-Run the web application:
-```bash
-./gradlew :app:web:wasmJsBrowserDevelopmentRun
-```
-
-#### Server
-Run the Ktor server:
-```bash
-./gradlew :app:server:run
-```
-
-## Documentation
-
-*   [AGENTS.md](./AGENTS.md): Development guide for AI agents and developers.
-*   [Architecture](./docs/architecture.md): Detailed project architecture.
+*This project is built using Kotlin Multiplatform and Compose Multiplatform.*
