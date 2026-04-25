@@ -39,9 +39,22 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-include(":composeApp")
-include(":androidApp")
-include(":desktopApp")
-include(":webApp")
-include(":server")
-include(":shared")
+// Automatically include lib modules
+file("libs").listFiles()?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }?.forEach {
+    include(":libs:${it.name}")
+}
+
+// Automatically include core modules
+file("core").listFiles()?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }?.forEach {
+    include(":core:${it.name}")
+}
+
+// Automatically include feature modules
+file("feature").listFiles()?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }?.forEach {
+    include(":feature:${it.name}")
+}
+
+// Automatically include app modules
+file("app").listFiles()?.filter { it.isDirectory && File(it, "build.gradle.kts").exists() }?.forEach {
+    include(":app:${it.name}")
+}
