@@ -11,6 +11,9 @@ To ensure consistency and quality, all AI agents MUST map their context accordin
 3. **UI/UX**: Reference [docs/DESIGN.md](docs/DESIGN.md) for universal frontend principles and [docs/design/](docs/design/) for feature-specific designs.
 4. **Environment**: Reference [docs/DEVELOPER.md](docs/DEVELOPER.md) for build commands and setup instructions.
 
+### MANDATORY PROTOCOL: Planning and Approval
+You MUST always present a detailed plan and wait for explicit user approval before executing any file modifications, running commands, or performing significant actions. Failure to do so is a violation of core repository safety protocols.
+
 ### CRITICAL RULE: Documentation Updates
 When a user commands you to 'update docs', you MUST intelligently disperse the new information directly into the appropriate specialized file:
 - **`docs/DESIGN.md`**: For UI framework changes, component principles, or visual assets.

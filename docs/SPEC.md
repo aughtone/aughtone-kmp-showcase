@@ -7,7 +7,10 @@ This document outlines the functional constraints, business logic rules, and dom
 - **Home Screen**: Displays a list of past entries sorted by date.
 - **Entry Creation**: 
     - Fields: Title, Date, Content.
-    - Mood Selection: A drop-down to select the user's mood.
+- **Mood Selection**: A drop-down to select the user's mood.
+- **Media Support**:
+    - **Image Attachments**: Users can attach images to entries.
+    - **Instant Previews**: Use BlurHash placeholders for all entry images to maintain UI fluidity.
 
 ## Visual Requirements
 

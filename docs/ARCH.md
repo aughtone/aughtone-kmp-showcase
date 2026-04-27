@@ -11,20 +11,20 @@ This document details the project's global engineering rules, repository synchro
 
 ## Module Structure
 
-The project is divided into several top-level directories:
+The project is divided into several functional directories:
 
-- **`app/`**: Contains platform-specific application modules.
-    - Android, Desktop, Web, Server.
-- **`core/`**: Shared core modules. These modules must contain only platform-agnostic logic; platform-specific implementations (`expect`/`actual`) are not allowed in `:core:*` modules.
-    - `:core:domain`: Pure business logic. Contains domain models (entities), repository interfaces, and use cases.
-    - `:core:data`: Implementation of data access logic. Contains repository implementations, local data sources (e.g., Prefs), and DI configuration for data.
-    - `:core:api`: Networking logic and API definitions. Contains Ktor-based API clients, API response models, and endpoint resources.
-    - `:core:design`: Contains generic, reusable UI components (e.g., SearchBar, buttons, cards) and common UI utilities.
-- **`libs/`**: Shared library modules providing foundational services.
-    - `libs:network`: Ktor-based networking.
-    - `libs:database`: SQLDelight-based local storage.
-    - `libs:version`: Versioning and metadata.
-- **`feature/`**: Feature-specific modules (e.g., `feature:home`). Each feature is self-contained.
+- **`app/`**: Contains application orchestration and entry points.
+    - `:app:common`: Shared Compose UI, Navigation3 host, and global DI.
+    - `:app:android`, `:app:ios`, `:app:desktop`, `:app:web`, `:app:server`: Platform targets.
+- **`core/`**: Foundational shared logic.
+    - `:core:domain`: Pure business logic (Models, Repository interfaces).
+    - `:core:data`: Bridges domain repositories to DataStore and API.
+    - `:core:api`: Ktor-based networking.
+    - `:core:design`: Design system, themes, and generic UI components.
+    - `:core:database`: Multiplatform persistence using **Jetpack DataStore**.
+- **`libs/`**: Shared library utilities.
+    - `:libs:network`: Networking infrastructure.
+- **`feature/`**: Self-contained feature modules (e.g., `:feature:journal`).
 
 ## Dependency Rules
 To maintain a clean and maintainable codebase, we enforce the following dependency rules:
@@ -47,6 +47,11 @@ To maintain a clean and maintainable codebase, we enforce the following dependen
 ### Repository Patterns
 - Prefer direct repository interaction within routes/ViewModels.
 - Maintain immutability throughout the data pipeline.
+
+### Persistence
+- **Framework**: Use **Jetpack DataStore** for all multiplatform storage requirements.
+- **Serialization**: Use **Okio** or **Kotlinx Serialization** to serialize data objects.
+- **Relational Databases**: Do **NOT** use SQLDelight or any relational database frameworks. This project avoids SQL overhead in favor of simple, serialized file storage.
 
 ## Dependency Management
 - Use Gradle Version Catalog (`gradle/libs.versions.toml`).

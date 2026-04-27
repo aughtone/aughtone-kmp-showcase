@@ -21,13 +21,14 @@ The showcase is a Kotlin Multiplatform (KMP) project targeting Android, iOS, Web
 
 ### Project Structure (Modules)
 
-*   **[:androidApp](../androidApp)**: Native Android application target.
-*   **[:composeApp](../composeApp)**: Shared Compose Multiplatform UI and main application entry point.
-*   **[:desktopApp](../desktopApp)**: Native desktop application target for JVM.
-*   **[:iosApp](../iosApp)**: Native iOS application target (SwiftUI entry point).
-*   **[:server](../server)**: Ktor backend application providing REST API endpoints.
-*   **[:shared](../shared)**: Common business logic, data models, and shared utilities.
-*   **[:webApp](../webApp)**: Native web application target (Kotlin/JS).
+*   **[:app:android](../app/android)**: Native Android application target.
+*   **[:app:common](../app/common)**: Shared Compose Multiplatform UI, Navigation3, and main app entry point.
+*   **[:app:desktop](../app/desktop)**: Native desktop application target for JVM.
+*   **[:app:ios](../app/ios)**: Native iOS application target (SwiftUI entry point).
+*   **[:app:server](../app/server)**: Ktor backend application.
+*   **[:core:domain](../core/domain)**: Pure business logic and domain models.
+*   **[:core:database](../core/database)**: Multiplatform DataStore persistence.
+*   **[:feature:journal](../feature/journal)**: Core journaling feature module.
 *   **[docs/](./)**: This documentation directory (Scalable Hierarchy).
 
 ### Visual Architecture
@@ -53,20 +54,20 @@ The showcase is a Kotlin Multiplatform (KMP) project targeting Android, iOS, Web
 
 #### Android Application
 Use the IDE run configurations or the following terminal commands:
-- **macOS/Linux**: `./gradlew :composeApp:assembleDebug`
-- **Windows**: `.\gradlew.bat :composeApp:assembleDebug`
+- **macOS/Linux**: `./gradlew :app:android:assembleDebug`
+- **Windows**: `.\gradlew.bat :app:android:assembleDebug`
 
 #### Desktop (JVM) Application
-- **macOS/Linux**: `./gradlew :composeApp:run`
-- **Windows**: `.\gradlew.bat :composeApp:run`
+- **macOS/Linux**: `./gradlew :app:desktop:run`
+- **Windows**: `.\gradlew.bat :app:desktop:run`
 
 #### Ktor Server
-- **macOS/Linux**: `./gradlew :server:run`
-- **Windows**: `.\gradlew.bat :server:run`
+- **macOS/Linux**: `./gradlew :app:server:run`
+- **Windows**: `.\gradlew.bat :app:server:run`
 
 #### Web Application (JS Target)
-- **macOS/Linux**: `./gradlew :composeApp:jsBrowserDevelopmentRun`
-- **Windows**: `.\gradlew.bat :composeApp:jsBrowserDevelopmentRun`
+- **macOS/Linux**: `./gradlew :app:web:jsBrowserDevelopmentRun`
+- **Windows**: `.\gradlew.bat :app:web:jsBrowserDevelopmentRun`
 
 #### iOS Application
 Open the `/iosApp` directory in Xcode and run from the IDE, or use the provided IDE run configurations.
