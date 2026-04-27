@@ -18,6 +18,16 @@ When a user commands you to 'update docs', you MUST intelligently disperse the n
 - **`docs/SPEC.md`**: For functional constraints, business logic rules, or domain limits.
 - **`docs/DEVELOPER.md`**: For build scripts, local setup, or environment configurations.
 
+## GitHub Synchronization
+
+This project uses a specialized toolchain to keep documentation in sync with GitHub Issues.
+- **Trigger**: Whenever you update `docs/SPEC.md` (Acceptance Criteria) or `docs/GAPS.md` (Technical Debt), you MUST run the sync script.
+- **Workflow**:
+    1. Mark new items with `- Issue: #NEW`.
+    2. Run: `python3 tools/github/gh.py`.
+    3. The script will create GitHub issues and write the IDs back to the files.
+- **Requirements**: Ensure `GITHUB_TOKEN` and `GITHUB_REPOSITORY` are exported in your environment.
+
 ## AI Interaction Guidelines
 
 *   **Rejection Handling**: If a change is rejected, stop asking to accept it over and over again. You can ask why it was rejected once.
