@@ -21,15 +21,16 @@ When a user commands you to 'update docs', you MUST intelligently disperse the n
 ## GitHub Synchronization
 
 This project uses a specialized toolchain to keep documentation in sync with GitHub Issues.
-- **Trigger**: Whenever you update `docs/SPEC.md` (Acceptance Criteria) or `docs/GAPS.md` (Technical Debt), you MUST run the sync script.
+- **Trigger**: Whenever you update `docs/SPEC.md` (Acceptance Criteria) or `docs/GAPS.md` (Technical Debt).
 - **Workflow**:
     1. Mark new items with `- Issue: #NEW`.
-    2. Run: `python3 tools/github/gh.py`.
-    3. The script will create GitHub issues and write the IDs back to the files.
+    2. **DO NOT** run the sync script yourself. Notify the developer that documentation has been updated.
+    3. The developer will run `python3 tools/github/gh.py` to synchronize and write IDs back to the files.
 - **Requirements**: Ensure `GITHUB_TOKEN` and `GITHUB_REPOSITORY` are exported in your environment.
 
 ## AI Interaction Guidelines
 
+*   **Planning Mode**: By default, AI agents should provide a concise implementation plan. Ask the developer if they would like to use Planning Mode (default) or Direct Execution Mode.
 *   **Rejection Handling**: If a change is rejected, stop asking to accept it over and over again. You can ask why it was rejected once.
 *   **Be direct and to the point**: Do not add conversational fluff.
 *   **Testing**: When writing tests, always use Kotlin, place them in `src/commonTest/kotlin`, and use manual fakes/stubs (no mock libraries).
