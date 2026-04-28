@@ -11,8 +11,9 @@ This document tracks core engineering deliverables before full specification int
 
 ## 🛠️ Technical Debt (Infrastructure)
 - [ ] **Navigation3 Refinement**:
-    - [ ] Harden `ShowcaseNavigation.kt` and integrate feature-specific routes.
-    - [ ] Implement robust back-stack handling.
+    - [x] Basic `NavDisplay` and `entryProvider` implementation.
+    - [ ] Integrate deep linking support.
+    - [ ] Implement robust back-stack handling for nested feature routes.
 
 ## 🕵️ Investigations & Explorations
 - [ ] **Observe vs. Sync Performance**:

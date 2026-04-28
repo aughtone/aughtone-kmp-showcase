@@ -11,6 +11,10 @@ This document details the project's global engineering rules, repository synchro
 
 ## 2. Data Synchronization
 - **Observe vs. Sync Pattern**: UI observes local storage changes. Background sync processes update local storage from remote APIs without direct UI blocking.
+- **Networking**: Ktor-based networking using `Resource` endpoints.
+    - `JournalEntryResource`: Root endpoint for `/journal-entries`.
+    - `JournalEntryResource.Id`: Specific entry access via `/{id}`.
+- **Data Transfer**: `JournalEntryDto` used for network boundaries, mapped to `JournalEntry` domain model.
 
 ## 3. Persistence
 - **Database Resilience**: Local storage must handle serialization failures gracefully, reverting to last known good states if corruption occurs.

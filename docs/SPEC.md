@@ -3,12 +3,18 @@
 This document outlines the functional requirements, system definitions, business limits, and product glossary for the application.
 
 ## 1. Domain Definitions
-- **Journal Entry**: A record containing a Title, Date, and Content, optionally with image attachments and a mood rating.
-- **Mood**: A user-selected state (e.g., Happy, Neutral, Sad) associated with an entry.
+- **Journal Entry**: A record containing:
+    - `id`: Unique identifier (String).
+    - `title`: Short summary (String).
+    - `date`: Entry timestamp (LocalDate).
+    - `content`: Narrative body (String).
+    - `mood`: Emotional context (Mood).
+- **Mood**: A user-selected state associated with an entry. Options:
+    - `Happy`, `Sad`, `Calm`, `Energetic`, `Anxious`.
 
 ## 2. Business Rules
-- **Entry Creation**: Fields required: Title, Date, Content.
-- **Mood Selection**: A mandatory selection for each entry.
+- **Entry Creation**: Fields required: Title, Date, Content, Mood.
+- **Mood Selection**: A mandatory selection for each entry to categorize emotional trends.
 - **Media Support**:
     - **Image Attachments**: Users can attach images to entries.
     - **Instant Previews**: Use BlurHash placeholders for all entry images to maintain UI fluidity.
