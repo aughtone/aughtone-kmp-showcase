@@ -1,20 +1,31 @@
-# Design & UI Rules
+# Design Guidelines
 
-This document outlines the universal frontend component principles and provides an index to visual assets and feature-specific designs.
+This document outlines styling parameters, layout schemas, typography, and accessibility boundaries.
 
-## Universal Frontend Principles
+## 1. UI Toolkit
+- **Framework**: Jetpack Compose with Material 3.
+- **Navigation**: Use `androidx.navigation3` for all navigation logic.
+    - **Routes**: `ListRoute` (Entry list view), `DetailsRoute` (Specific entry detail).
+    - **Host**: `ShowcaseNavigation` using `NavDisplay` and `entryProvider`.
+- **Image Loading**: Use **Coil 3** with Ktor-integration for all remote and local media.
+- **Placeholders**: Use **BlurHash** to provide instant, visually pleasing loading states for images.
 
-- **Jetpack Compose Multiplatform**: The primary UI framework for all client targets.
-- **Material 3**: Use Material 3 components, typography, and color schemes for a modern look.
-- **Atomic Design**: Structure UI components into atoms, molecules, and organisms for maximum reusability.
-- **Accessibility**: Follow accessibility tagging hierarchies to ensure the application is usable by everyone.
+## 2. Atomic Design System
+- **Atoms**: Smallest UI units (Buttons, TextFields, Icons) located in `core:design`.
+- **Molecules**: Groups of atoms.
+    - `EntryItem`: Summarized entry view for lists.
+- **Organisms**: Feature-level sections.
+    - `ListScreen`: Full entry overview and navigation hub.
+    - `DetailsScreen`: Detailed view of a single journal entry.
+
+## 3. General Principles
+- **Accessibility**: Follow accessibility tagging hierarchies.
 - **Spacing**: Avoid `Spacer` composables; use container arrangements (`verticalArrangement`, `horizontalArrangement`) and `padding` modifiers.
+- **Theming**: Focus on tranquil nature themes as defined in `SPEC.md`.
 
-## Design Assets
-
+## 4. Design Assets
 - 📖 [Project Infographic](design/infographic.png): A visual overview of the project structure and goals.
 - 📊 [Slide Deck](design/slidedeck.pdf): Presentation detailing the application features and roadmap.
 
-## Feature Specific Designs
-
-- *No feature-specific designs documented yet.*
+## 5. Test Automation Hooks
+- (Reserved for test tags and automation identifiers)
