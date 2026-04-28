@@ -1,43 +1,54 @@
-# Architecture Guidelines
+# Project Architecture Guidelines
 
 This document details the project's global engineering rules, repository synchronization patterns, and technical stack.
 
-## General Principles
+## 1. Core Principles
+- **Offline-First**: All application features must function without an active network connection, using local storage as the primary source of truth.
+- **Language**: Kotlin is the mandatory and preferred language. The only exception is platform-specific targets where Kotlin compiles to Java (e.g., JVM and Android targets).
+- **Dependency Injection**: **Koin** is the standard dependency injection framework for this project.
+- **Immutability**: Prefer `val` over `var` for predictable and thread-safe code.
+- **Null Safety**: Avoid nullable lists; always return an empty list instead of `null`.
 
-*   **Language**: Kotlin is the mandatory and preferred language. The only exception is platform-specific targets where Kotlin compiles to Java (e.g., JVM and Android targets).
-*   **Dependency Injection**: **Koin** is the standard dependency injection framework for this project. Because this is a KMP project, Android-specific libraries like Dagger and Hilt are not compatible.
-*   **Immutability**: Prefer `val` over `var` for predictable and thread-safe code.
-*   **Null Safety**: Avoid nullable lists; always return an empty list instead of `null`.
+## 2. Data Synchronization
+- **Observe vs. Sync Pattern**: UI observes local storage changes. Background sync processes update local storage from remote APIs without direct UI blocking.
+- **Networking**: Ktor-based networking using `Resource` endpoints.
+    - `JournalEntryResource`: Root endpoint for `/journal-entries`.
+    - `JournalEntryResource.Id`: Specific entry access via `/{id}`.
+- **Data Transfer**: `JournalEntryDto` used for network boundaries, mapped to `JournalEntry` domain model.
 
-## Module Structure
+## 3. Persistence
+- **Database Resilience**: Local storage must handle serialization failures gracefully, reverting to last known good states if corruption occurs.
+- **Framework**: Use **Jetpack DataStore** for all multiplatform storage requirements.
+- **Serialization**: Use **Okio** or **Kotlinx Serialization** to serialize data objects.
+- **Relational Databases**: Do **NOT** use SQLDelight or any relational database frameworks. This project avoids SQL overhead in favor of simple, serialized file storage.
 
-The project is divided into several top-level directories:
+## 4. Module Structure
+The project is divided into several functional directories:
 
-- **`app/`**: Contains platform-specific application modules.
-    - Android, Desktop, Web, Server.
-- **`core/`**: Shared core modules. These modules must contain only platform-agnostic logic; platform-specific implementations (`expect`/`actual`) are not allowed in `:core:*` modules.
-    - `:core:domain`: Pure business logic. Contains domain models (entities), repository interfaces, and use cases.
-    - `:core:data`: Implementation of data access logic. Contains repository implementations, local data sources (e.g., Prefs), and DI configuration for data.
-    - `:core:api`: Networking logic and API definitions. Contains Ktor-based API clients, API response models, and endpoint resources.
-    - `:core:design`: Contains generic, reusable UI components (e.g., SearchBar, buttons, cards) and common UI utilities.
-- **`libs/`**: Shared library modules providing foundational services.
-    - `libs:network`: Ktor-based networking.
-    - `libs:database`: SQLDelight-based local storage.
-    - `libs:version`: Versioning and metadata.
-- **`feature/`**: Feature-specific modules (e.g., `feature:home`). Each feature is self-contained.
+- **`app/`**: Contains application orchestration and entry points.
+    - `:app:common`: Shared Compose UI, Navigation3 host, and global DI.
+    - `:app:android`, `:app:ios`, `:app:desktop`, `:app:web`, `:app:server`: Platform targets.
+- **`core/`**: Foundational shared logic.
+    - `:core:domain`: Pure business logic (Models, Repository interfaces).
+    - `:core:data`: Bridges domain repositories to DataStore and API.
+    - `:core:api`: Ktor-based networking.
+    - `:core:design`: Design system, themes, and generic UI components.
+    - `:core:database`: Multiplatform persistence using **Jetpack DataStore**.
+- **`libs/`**: Shared library utilities.
+    - `:libs:network`: Networking infrastructure.
+- **`feature/`**: Self-contained feature modules (e.g., `:feature:journal`).
 
-## Dependency Rules
+## 5. Dependency Rules
 To maintain a clean and maintainable codebase, we enforce the following dependency rules:
-- **`:core:domain` module**: This module contains core business logic (entities, use cases, repository interfaces) and **must not** depend on any other modules.
-- **`lib/` modules**: These are foundational library modules and **must not** depend on `:app:*`, `:core:*`, or `:feature:*` modules.
-- **`core/` modules** (excluding `:core:domain`): Can depend on `libs/` and `:core:domain`, but should not depend on `feature/` or `app/`. These modules **must not** contain any platform-specific logic.
-- **`feature/` modules**: Can depend on `core/` and `libs/`. They should be self-contained and not depend on other features or the `app/` module.
-- **`app/` modules**: Can depend on any other module (`feature/`, `core/`, `libs/`).
+- **`:core:domain` module**: Must not depend on any other modules.
+- **`lib/` modules**: Must not depend on `:app:*`, `:core:*`, or `:feature:*` modules.
+- **`core/` modules** (excluding `:core:domain`): Can depend on `libs/` and `:core:domain`, but should not depend on `feature/` or `app/`. Must not contain platform-specific logic.
+- **`feature/` modules**: Can depend on `core/` and `libs/`. Self-contained; no cross-feature dependencies.
+- **`app/` modules**: Can depend on any other module.
 
-## Coding Standards
-
+## 6. Coding Standards
 ### State Management
-- Use `data class` to represent UI state (static and predictable structure).
+- Use `data class` to represent UI state.
 - Do not use sealed classes for state objects.
 
 ### UI Toolkit
@@ -47,7 +58,3 @@ To maintain a clean and maintainable codebase, we enforce the following dependen
 ### Repository Patterns
 - Prefer direct repository interaction within routes/ViewModels.
 - Maintain immutability throughout the data pipeline.
-
-## Dependency Management
-- Use Gradle Version Catalog (`gradle/libs.versions.toml`).
-- Keep dependencies updated to the latest stable versions.
