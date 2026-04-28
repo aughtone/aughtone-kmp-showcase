@@ -13,3 +13,9 @@ This document outlines the functional constraints, business logic rules, and dom
 
 - **Modern Look**: Consistent use of Material 3 components and themes.
 - **Theming**: tranquil nature scenes should be incorporated into the header sections of the application.
+
+## Acceptance Criteria
+
+### [AC-3] Mood Selection UI
+- **Requirement**: The entry creation screen must provide a clear, accessible mood picker.
+- **Issue**: #12

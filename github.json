@@ -1,0 +1,11 @@
+{
+  "repository": "aughtone/aughtone-kmp-showcase",
+  "project_id": "SHOWCASE",
+  "ac_prefix": "AC",
+  "sync": {
+    "files": [
+      "docs/SPEC.md",
+      "docs/GAPS.md"
+    ]
+  }
+}

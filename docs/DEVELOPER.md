@@ -21,13 +21,15 @@ The showcase is a Kotlin Multiplatform (KMP) project targeting Android, iOS, Web
 
 ### Project Structure (Modules)
 
-*   **[:androidApp](../androidApp)**: Native Android application target.
-*   **[:composeApp](../composeApp)**: Shared Compose Multiplatform UI and main application entry point.
-*   **[:desktopApp](../desktopApp)**: Native desktop application target for JVM.
-*   **[:iosApp](../iosApp)**: Native iOS application target (SwiftUI entry point).
-*   **[:server](../server)**: Ktor backend application providing REST API endpoints.
-*   **[:shared](../shared)**: Common business logic, data models, and shared utilities.
-*   **[:webApp](../webApp)**: Native web application target (Kotlin/JS).
+*   **[:app:common](../app/common)**: Shared Compose Multiplatform UI and main application entry point (Integration & Navigation).
+*   **[:app:android](../app/android)**: Native Android application target.
+*   **[:app:ios](../app/ios)**: Native iOS application target (SwiftUI entry point).
+*   **[:app:desktop](../app/desktop)**: Native desktop application target for JVM.
+*   **[:app:web](../app/web)**: Native web application target (Kotlin/JS).
+*   **[:app:server](../app/server)**: Ktor backend application.
+*   **core/**: Foundational shared logic (e.g., `:core:database`, `:core:domain`).
+*   **feature/**: Functional feature modules (e.g., `:feature:journal`).
+*   **libs/**: Shared infrastructure libraries.
 *   **[docs/](./)**: This documentation directory (Scalable Hierarchy).
 
 ### Visual Architecture
@@ -52,24 +54,23 @@ The showcase is a Kotlin Multiplatform (KMP) project targeting Android, iOS, Web
 ### Build and Run Instructions
 
 #### Android Application
-Use the IDE run configurations or the following terminal commands:
-- **macOS/Linux**: `./gradlew :composeApp:assembleDebug`
-- **Windows**: `.\gradlew.bat :composeApp:assembleDebug`
+- **macOS/Linux**: `./gradlew :app:android:installDebug`
+- **Windows**: `.\gradlew.bat :app:android:installDebug`
 
 #### Desktop (JVM) Application
-- **macOS/Linux**: `./gradlew :composeApp:run`
-- **Windows**: `.\gradlew.bat :composeApp:run`
+- **macOS/Linux**: `./gradlew :app:desktop:run`
+- **Windows**: `.\gradlew.bat :app:desktop:run`
 
 #### Ktor Server
-- **macOS/Linux**: `./gradlew :server:run`
-- **Windows**: `.\gradlew.bat :server:run`
+- **macOS/Linux**: `./gradlew :app:server:run`
+- **Windows**: `.\gradlew.bat :app:server:run`
 
 #### Web Application (JS Target)
-- **macOS/Linux**: `./gradlew :composeApp:jsBrowserDevelopmentRun`
-- **Windows**: `.\gradlew.bat :composeApp:jsBrowserDevelopmentRun`
+- **macOS/Linux**: `./gradlew :app:web:jsBrowserDevelopmentRun`
+- **Windows**: `.\gradlew.bat :app:web:jsBrowserDevelopmentRun`
 
 #### iOS Application
-Open the `/iosApp` directory in Xcode and run from the IDE, or use the provided IDE run configurations.
+Open the `/app/ios` directory in Xcode and run from the IDE.
 
 ---
 
@@ -111,3 +112,32 @@ Please execute a complete refactor of our repository's documentation structure. 
    - Provide the path `docs/design/<feature>/DESIGN.md` when rendering UI screens.
    - **CRITICAL RULE**: Add a directive that explicitly teaches the AI: *"When a user commands you to 'update docs', you must intelligently disperse the new information directly into the appropriate specialized file (`docs/DESIGN.md`, `docs/ARCH.md`, or `docs/SPEC.md`)."*
 ```
+
+---
+
+## 6. GitHub Integration
+
+To synchronize `SPEC.md` and `GAPS.md` with GitHub Issues, you must configure your environment:
+
+1. **Project Metadata**: If `github.json` is missing, running the script will enter an interactive setup mode to generate it. Ensure you run this from the project root.
+2. **GitHub Token**: Generate a Personal Access Token (PAT) at [github.com/settings/tokens](https://github.com/settings/tokens).
+   - **Fine-grained PAT (Recommended)**:
+     - **Repository Access**: "Only select repositories" -> `{your-repo}`.
+     - **Permissions**: "Issues" (Read & Write).
+   - **Classic PAT**:
+     - **Scopes**: Select the `repo` checkbox.
+3. **Environment Variables**: To support multiple projects, the sync script looks for a token named after your `project_id` in `github.json`. For this project:
+   ```bash
+   export SHOWCASE_GITHUB_TOKEN="your_token_here"
+   ```
+   If the token is missing, the script will provide the exact `export` command needed for your current project.
+4. **Run Sync**:
+   ```bash
+   python3 libs/toolchain/sync_github.py
+   ```
+5. **Advanced Options**:
+   - **Dry Run**: Set `DRY_RUN=true` to see what would happen without making any API calls or file changes.
+     ```bash
+     DRY_RUN=true python3 libs/toolchain/sync_github.py
+     ```
+   - **Status Mapping**: If a Markdown block contains `- Status: [x] DONE`, the sync script will automatically close the linked GitHub issue.
